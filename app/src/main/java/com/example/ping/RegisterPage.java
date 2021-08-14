@@ -49,7 +49,7 @@ public class RegisterPage extends AppCompatActivity {
                         if(u!=null)
                         {
 //                            progressBar.setVisibility(View.INVISIBLE);
-                            FirebaseDatabase.getInstance().getReference().child("userinfo").child(u.getUid()).setValue(pMap);
+                            FirebaseDatabase.getInstance().getReference().child(u.getUid()).setValue(pMap);
                             finish();
                             startActivity(new Intent(RegisterPage.this,LandingPage.class));
                         }
