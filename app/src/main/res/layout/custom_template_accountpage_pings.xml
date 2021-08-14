@@ -23,6 +23,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="afsd" />
+
+            <TextView
+                android:id="@+id/accountPingCustomLayAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:textSize="15dp"
                 android:textColor="@color/black"
                 android:text="afsd" />
