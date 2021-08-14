@@ -42,7 +42,7 @@
                 android:text="" />
 
             <Button
-                android:id="@+id/button15"
+                android:id="@+id/searchPageIdButton"
                 android:layout_width="10dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"

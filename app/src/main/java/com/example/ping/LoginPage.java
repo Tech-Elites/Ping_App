@@ -2,6 +2,7 @@ package com.example.ping;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -29,6 +30,7 @@ public class LoginPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         e=findViewById(R.id.loginEmail);
         p=findViewById(R.id.loginPassword);
+
     }
 
     void login(String email, String password){

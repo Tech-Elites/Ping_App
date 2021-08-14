@@ -1,12 +1,16 @@
 package com.example.ping;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +57,41 @@ public class pingspage extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    Button companions, pingbacks;
+
+    void onCompanionClick(){
+        companions.setBackgroundColor(Color.parseColor("#3C7BFB"));
+        pingbacks.setBackgroundColor(Color.parseColor("#FFFFFF"));
+    }
+
+    void onPingbacksClick(){
+        pingbacks.setBackgroundColor(Color.parseColor("#3C7BFB"));
+        companions.setBackgroundColor(Color.parseColor("#FFFFFF"));
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        companions=getView().findViewById(R.id.homeCompanions);
+        pingbacks=getView().findViewById(R.id.homePingBacks);
+        companions.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                onCompanionClick();
+            }
+        });
+        pingbacks.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                onPingbacksClick();
+            }
+        });
     }
 
     @Override

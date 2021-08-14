@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".LoginPage">
 
+
+
+
     <LinearLayout
+        android:layout_marginTop="50dp"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -19,18 +24,18 @@
 
         <EditText
             android:id="@+id/loginEmail"
-            android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Email"
             android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/loginPassword"
-            android:hint="Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Password"
             android:inputType="textPassword" />
 
         <Button
