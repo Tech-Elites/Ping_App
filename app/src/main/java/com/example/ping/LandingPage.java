@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LandingPage extends AppCompatActivity {
 
@@ -36,6 +37,7 @@ public class LandingPage extends AppCompatActivity {
         {
             case R.id.SignOut:
                 Toast.makeText(this, "Signout", Toast.LENGTH_SHORT).show();
+
                 return  true;
 
             default:
