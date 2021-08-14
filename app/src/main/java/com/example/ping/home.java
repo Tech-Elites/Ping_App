@@ -37,7 +37,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.Locale;
@@ -167,37 +171,88 @@ public class home extends Fragment {
             }
             else
             {
-                new AlertDialog.Builder(getActivity())
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Alert!")
-                        .setMessage("Are you sure you want to proceed with this ping??")
-                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                String lat=""+myLocation.latitude;
-                                String lon=""+myLocation.longitude;
-                                String visible="true";
-                                if(switchCompat.isChecked())
+                        int count=0;
+                        for(DataSnapshot dataSnapshot:snapshot.getChildren())
+                        {
+                            double lat=0,lng=0;
+                            for(DataSnapshot snapshot1:dataSnapshot.getChildren())
+                            {
+                                if(snapshot1.getKey().toString().compareTo("lat")==0)
                                 {
-                                    Toast.makeText(getActivity(), "Activated", Toast.LENGTH_SHORT).show();
-                                    visible="false";
+                                    lat=Double.parseDouble(snapshot1.getValue().toString());
                                 }
-                                final String finalVisible=visible;
-                                Intent i=new Intent(getActivity(),PingConfirmNewPing.class);
-                                //make sure that one person is not able to make consecutive pings from one location
-                                i.putExtra("visible",finalVisible);
-                                i.putExtra("lat",lat);
-                                i.putExtra("long",lon);
-                                i.putExtra("desc",description.getText().toString());
-                                i.putExtra("address",addressView.getText().toString());
-                                startActivity(i);
-
-
+                                if(snapshot1.getKey().toString().compareTo("lng")==0)
+                                {
+                                    lng=Double.parseDouble(snapshot1.getValue().toString());
+                                }
                             }
-                        })
-                        .setNegativeButton("Nope",null)
-                        .show();
+                            float result[]=new float[1];
+                            Location.distanceBetween(lng,lat,myLocation.longitude,myLocation.latitude,result);
+                            Toast.makeText(getActivity(), "distance"+result[0], Toast.LENGTH_SHORT).show();
+                            if(result[0]<150)
+                            {
+                                count++;
+                            }
+
+                        }
+                        if(count==0)
+                        {
+                            new AlertDialog.Builder(getActivity())
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setTitle("Alert!")
+                                    .setMessage("Are you sure you want to proceed with this ping??")
+                                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            String lat=""+myLocation.latitude;
+                                            String lon=""+myLocation.longitude;
+                                            String visible="true";
+                                            if(switchCompat.isChecked())
+                                            {
+                                                Toast.makeText(getActivity(), "Activated", Toast.LENGTH_SHORT).show();
+                                                visible="false";
+                                            }
+                                            final String finalVisible=visible;
+                                            Intent i=new Intent(getActivity(),PingConfirmNewPing.class);
+                                            //make sure that one person is not able to make consecutive pings from one location
+                                            i.putExtra("visible",finalVisible);
+                                            i.putExtra("lat",lat);
+                                            i.putExtra("long",lon);
+                                            i.putExtra("desc",description.getText().toString());
+                                            i.putExtra("address",addressView.getText().toString());
+                                            startActivity(i);
+
+
+                                        }
+                                    })
+                                    .setNegativeButton("Nope",null)
+                                    .show();
+                        }
+                        else
+                        {
+                            new AlertDialog.Builder(getActivity())
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setTitle("Alert!")
+                                    .setMessage("You already have a ping in this location you cannot create one !")
+                                    .setPositiveButton("Okay", null)
+                                    .show();
+
+                        }
+                        
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         }
     }

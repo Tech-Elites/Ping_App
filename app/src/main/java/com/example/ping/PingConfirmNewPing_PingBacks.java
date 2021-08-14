@@ -2,14 +2,18 @@ package com.example.ping;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.HttpAuthHandler;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
 
@@ -27,10 +32,11 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
     ArrayList<PingBackImageSwitchClass> arrayList=new ArrayList<>();
     CustomAdaptorNameDescSwitch customAdaptor;
     PingBackImageSwitchClass u1;
-    String address,desc,lat,lng,visible;
+    String address,desc,lat,lng,visible,curr_user_name="";
     ArrayList<String> selectedIdsStrangers=new ArrayList<>();
     ArrayList<String> alltheIds=new ArrayList<>();
     double lat_d,lng_d;
+    FirebaseUser u;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,12 +135,13 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                         {
                             alltheIds.add(id);
                             arrayList.add(new PingBackImageSwitchClass(name,ping.getDesc(),false));
-                            Toast.makeText(PingConfirmNewPing_PingBacks.this, ""+name+" here"+id, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PingConfirmNewPing_PingBacks.this, ""+name+" here"+id, Toast.LENGTH_SHORT).show();
                         }
 
 
                     }
                 }
+                createAdaptor();
             }
 
             @Override
@@ -149,13 +156,114 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
         customAdaptor = new CustomAdaptorNameDescSwitch(this,arrayList);
         listView.setAdapter(customAdaptor);
 
+        findTheCurrUser();
+    }
+    void findTheCurrUser()
+    {
+        u=FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseDatabase.getInstance().getReference().child(u.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    curr_user_name=task.getResult().getValue().toString();
+
+                }
+            }
+        });
     }
 
+    //ensure that only one button is pressed
     public void newPingPingbackSkip(View view) {
-
+        if(curr_user_name!="")
+        {
+            if(PingConfirmNewPing.selectedIds.size()>0)
+            {
+                PingRequest p=new PingRequest(desc,address,lat,lng,curr_user_name,u.getUid());
+                HashMap<String,String> h=p.returnPingRequest();
+                addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
+            }
+            AddPing();
+        }
     }
+    public void addToPing_c(String userId,int n,HashMap p)
+    {
+        FirebaseDatabase.getInstance().getReference().child(userId).child("ping_from_c").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    if(n<(PingConfirmNewPing.selectedIds.size()-1))
+                    {
+                        addToPing_c(PingConfirmNewPing.selectedIds.get(n+1),n+1,p);
+                    }
+                }
+            }
+        });
+    }
+    public void addPingBack_s(String userId, int n, HashMap p)
+    {
+        FirebaseDatabase.getInstance().getReference().child(userId).child("ping_back_from_s").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    if(n<(selectedIdsStrangers.size()-1))
+                    {
+                        addToPing_c(selectedIdsStrangers.get(n+1),n+1,p);
+                    }
+                }
+            }
+        });
+    }
+
 
     public void newPingPingbackProceed(View view) {
+        if(curr_user_name!="")
+        {
+            View v;
+            SwitchCompat sw;
+            for(int i=0;i<listView.getCount();i++)
+            {
+                v=listView.getChildAt(i);
+                sw=v.findViewById(R.id.customLay2Switch);
+                if(sw.isChecked())
+                {
+                    selectedIdsStrangers.add(alltheIds.get(i));
+                }
+            }
+            if(selectedIdsStrangers.size()>0)
+            {
+                PingRequest p=new PingRequest(desc,address,lat,lng,curr_user_name,u.getUid());
+                HashMap<String,String> h=p.returnPingRequest();
+                addPingBack_s(selectedIdsStrangers.get(0),0,h);
+            }
+            if(PingConfirmNewPing.selectedIds.size()>0)
+            {
+                PingRequest p=new PingRequest(desc,address,lat,lng,curr_user_name,u.getUid());
+                HashMap<String,String> h=p.returnPingRequest();
+                addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
+            }
 
+            AddPing();
+
+        }
     }
+    public void AddPing()
+    {
+        Ping p=new Ping(visible,desc,address,lat,lng);
+        HashMap<String,String> h=p.returnPing();
+        FirebaseDatabase.getInstance().getReference().child(u.getUid()).child("pings").push().setValue(h).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    finishAffinity();
+                    startActivity(new Intent(PingConfirmNewPing_PingBacks.this,LandingPage.class));
+
+                }
+            }
+        });
+    }
+
 }

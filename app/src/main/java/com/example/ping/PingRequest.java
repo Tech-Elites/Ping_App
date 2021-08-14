@@ -5,12 +5,12 @@ import java.util.HashMap;
 public class PingRequest {
     private String desc,address;
     private String lat,lng;
-    private String visible;
+
     private String name,userid;
 
 
 
-    public String getNamee() {
+    public String getName() {
         return name;
     }
 
@@ -18,16 +18,14 @@ public class PingRequest {
         return userid;
     }
 
-    public String getVisible() {
-        return visible;
-    }
 
-    public PingRequest(String visible, String desc, String address, String lat, String lng,String name,String userid) {
+
+    public PingRequest(String desc, String address, String lat, String lng,String name,String userid) {
         this.desc = desc;
         this.address = address;
         this.lat = lat;
         this.lng = lng;
-        this.visible = visible;
+
         this.name=name;
         this.userid=userid;
 
@@ -54,7 +52,6 @@ public class PingRequest {
     {
         HashMap<String,String> temp=new HashMap<>();
         temp.put("desc",desc);
-        temp.put("visible",visible);
         temp.put("lat",lat);
         temp.put("lng",lng);
         temp.put("address",address);
