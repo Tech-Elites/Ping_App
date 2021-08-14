@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,7 +41,9 @@ public class LandingPage extends AppCompatActivity {
         {
             case R.id.SignOut:
                 Toast.makeText(this, "Signout", Toast.LENGTH_SHORT).show();
-
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this,LoginPage.class));
                 return  true;
 
             default:

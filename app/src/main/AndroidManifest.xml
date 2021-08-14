@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping">
-        <activity android:name=".LandingPage"></activity>
-        <activity android:name=".RegisterPage"></activity>
-        <activity android:name=".LoginPage" />
-        <activity android:name=".PingConfirmNewPing_PingBacks" />
-        <activity android:name=".PingConfirmPingBack" />
-        <activity android:name=".PingConfirmNewPing" />
-        <activity android:name=".PingBackForm" />
-        <activity android:name=".ViewOnMap" />
-        <activity android:name=".EachPing" />
+        <activity android:name=".LandingPage" android:label=""></activity>
+        <activity android:name=".RegisterPage"  android:theme="@style/Theme.Design.NoActionBar"></activity>
+        <activity android:name=".LoginPage" android:label=""/>
+        <activity android:name=".PingConfirmNewPing_PingBacks" android:label=""/>
+        <activity android:name=".PingConfirmPingBack" android:label=""/>
+        <activity android:name=".PingConfirmNewPing" android:label=""/>
+        <activity android:name=".PingBackForm" android:label=""/>
+        <activity android:name=".ViewOnMap" android:label=""/>
+        <activity android:name=".EachPing" android:label=""/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
