@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping">
         <activity android:name=".LandingPage" android:label=""></activity>
-        <activity android:name=".RegisterPage"  android:theme="@style/Theme.Design.NoActionBar"></activity>
+        <activity android:name=".RegisterPage"  android:label=""></activity>
         <activity android:name=".LoginPage" android:label=""/>
         <activity android:name=".PingConfirmNewPing_PingBacks" android:label=""/>
         <activity android:name=".PingConfirmPingBack" android:label=""/>
