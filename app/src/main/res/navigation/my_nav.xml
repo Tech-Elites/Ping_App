@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/pingspage">
+
+    <fragment
+        android:id="@+id/pingspage"
+        android:name="com.example.ping.pingspage"
+        android:label="fragment_pingspage"
+        tools:layout="@layout/fragment_pingspage" />
+    <fragment
+        android:id="@+id/createping"
+        android:name="com.example.ping.home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.ping.search"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/account"
+        android:name="com.example.ping.account"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
+</navigation>

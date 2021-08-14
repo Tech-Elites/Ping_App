@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/create_icon"
+        android:title="Create"
+        android:id="@+id/createping"
+        />
+    <item
+        android:id="@+id/pingspage"
+        android:icon="@drawable/pings_icon"
+        android:title="Home" />
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/search_icon"
+        android:title="Search" />
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/account_icon"
+        android:title="Account" />
+</menu>
