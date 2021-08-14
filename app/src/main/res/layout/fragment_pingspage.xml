@@ -9,11 +9,22 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <ProgressBar
+        android:id="@+id/homePageProgress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="40dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,11 +43,11 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0"
                 android:paddingVertical="10dp"
                 android:text="Ping-Backs"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:letterSpacing="0"
                 android:textSize="20dp" />
 
             <Button
@@ -46,11 +57,11 @@
                 android:layout_weight="1"
                 android:backgroundTint="#3C7BFB"
                 android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0"
                 android:paddingVertical="10dp"
                 android:text="Companions"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:letterSpacing="0"
                 android:textSize="20dp" />
         </LinearLayout>
 

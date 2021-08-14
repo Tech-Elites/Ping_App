@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class PingRequest {
     private String desc,address;
     private String lat,lng;
-
     private String name,userid;
 
 
@@ -19,13 +18,11 @@ public class PingRequest {
     }
 
 
-
-    public PingRequest(String desc, String address, String lat, String lng,String name,String userid) {
+    public PingRequest(String visible, String desc, String address, String lat, String lng,String name,String userid) {
         this.desc = desc;
         this.address = address;
         this.lat = lat;
         this.lng = lng;
-
         this.name=name;
         this.userid=userid;
 

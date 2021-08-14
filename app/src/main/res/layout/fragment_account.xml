@@ -8,7 +8,20 @@
     tools:context=".account">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <ProgressBar
+        android:id="@+id/AccountPageProgress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -42,43 +55,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Sona Shubham"
+                    android:text="_______________"
                     android:textColor="@color/black"
                     android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/accountPageConnections"
-                    android:fontFamily="sans-serif-medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
                     android:paddingVertical="5dp"
-                    android:text="Connections: 30"
+                    android:text="Connections: __"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/accountPageCloseFriends"
-                    android:fontFamily="sans-serif-medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
                     android:paddingVertical="5dp"
-                    android:text="Close Friends: -1"
+                    android:text="Close Friends: 0"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pings:"
             android:fontFamily="sans-serif-medium"
             android:padding="10dp"
+            android:text="Pings:"
             android:textColor="@color/black"
-            android:textSize="29dp"/>
+            android:textSize="29dp" />
+
         <ListView
             android:id="@+id/accountPageListView"
             android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:layout_height="340dp" >
+
+        </ListView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
