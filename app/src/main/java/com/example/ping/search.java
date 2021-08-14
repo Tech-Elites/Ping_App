@@ -1,5 +1,6 @@
 package com.example.ping;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class search extends Fragment {
 
     public void SearchUserName(){
         //Search function here
+        startActivity(new Intent(getContext(),PingConfirmNewPing_PingBacks.class));
     }
 
     @Override
