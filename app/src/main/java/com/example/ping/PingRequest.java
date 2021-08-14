@@ -8,6 +8,8 @@ public class PingRequest {
     private String visible;
     private String name,userid;
 
+
+
     public String getNamee() {
         return name;
     }
@@ -28,6 +30,7 @@ public class PingRequest {
         this.visible = visible;
         this.name=name;
         this.userid=userid;
+
     }
     PingRequest()
     {}

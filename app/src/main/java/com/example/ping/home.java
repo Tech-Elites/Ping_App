@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -177,20 +178,21 @@ public class home extends Fragment {
                                 String lat=""+myLocation.latitude;
                                 String lon=""+myLocation.longitude;
                                 String visible="true";
-                                if(switchCompat.isActivated())
+                                if(switchCompat.isChecked())
                                 {
+                                    Toast.makeText(getActivity(), "Activated", Toast.LENGTH_SHORT).show();
                                     visible="false";
                                 }
-                                Ping p=new Ping(visible,description.getText().toString(),addressView.getText().toString(),lat,lon);
-                                FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isComplete())
-                                        {
+                                final String finalVisible=visible;
+                                Intent i=new Intent(getActivity(),PingConfirmNewPing.class);
+                                //make sure that one person is not able to make consecutive pings from one location
+                                i.putExtra("visible",finalVisible);
+                                i.putExtra("lat",lat);
+                                i.putExtra("long",lon);
+                                i.putExtra("desc",description.getText().toString());
+                                i.putExtra("address",addressView.getText().toString());
+                                startActivity(i);
 
-                                        }
-                                    }
-                                });
 
                             }
                         })
