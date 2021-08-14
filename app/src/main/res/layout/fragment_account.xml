@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:text="_______________"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="30dp" />
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:paddingVertical="5dp"
-                    android:text="Connections: __"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:paddingVertical="5dp"
-                    android:text="Close Friends: 0"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="15dp" />
             </LinearLayout>

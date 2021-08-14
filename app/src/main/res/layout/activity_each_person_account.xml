@@ -6,13 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".EachPersonAccount">
 
-    <TextView
-        android:id="@+id/EachPersonViewName"
+    <ProgressBar
+        android:id="@+id/EachAccountPageProgress"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/sona" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/EachaccountPageName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="10dp"
+            android:text="Pings:"
+            android:textColor="@color/black"
+            android:textSize="29dp" />
+
+        <ListView
+            android:id="@+id/EachaccountPageListView"
+            android:layout_width="match_parent"
+            android:layout_height="340dp" >
+
+        </ListView>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

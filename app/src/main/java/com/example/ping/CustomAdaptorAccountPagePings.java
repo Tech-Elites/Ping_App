@@ -36,17 +36,10 @@ public class CustomAdaptorAccountPagePings extends ArrayAdapter<Ping> {
             Ping currentUser = getItem(position);
 
             TextView tname = currentItemView.findViewById(R.id.accountPingCustomLayDesc);
+            TextView tadd = currentItemView.findViewById(R.id.accountPingCustomLayAdd);
 
             tname.setText(currentUser.getDesc());
-
-            tname.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-                    Toast.makeText(getContext(), "Hello", Toast.LENGTH_SHORT).show();
-                    //FUNCTION HERE
-                }
-            });
+            tadd.setText("@ "+currentUser.getAddress());
 
         }catch (Exception e){
             System.out.println(e);

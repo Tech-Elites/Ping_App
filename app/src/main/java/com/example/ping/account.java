@@ -75,7 +75,7 @@ public class account extends Fragment {
     String name;
     int connections=0;
     FirebaseUser user;
-    TextView nameTV, connectionsTV;
+    TextView nameTV, connectionsTV, closeTV;
 
     ArrayList<Ping> arrayList=new ArrayList<>();
     CustomAdaptorAccountPagePings customAdaptor;
@@ -91,6 +91,7 @@ public class account extends Fragment {
         nameTV=getActivity().findViewById(R.id.accountPageName);
         connectionsTV=getActivity().findViewById(R.id.accountPageConnections);
         user=FirebaseAuth.getInstance().getCurrentUser();
+        closeTV=getActivity().findViewById(R.id.accountPageCloseFriends);
         listView=getActivity().findViewById(R.id.accountPageListView);
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("name");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -130,6 +131,7 @@ public class account extends Fragment {
 
     void searchPings(){
         nameTV.setText(name);
+        connectionsTV.setText("Close Friends: 0");
         connectionsTV.setText("Connections: "+connections);
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
