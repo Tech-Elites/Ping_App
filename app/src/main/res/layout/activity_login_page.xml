@@ -14,13 +14,20 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="20dp"
+        app:layout_goneMarginTop="20dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log in" />
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="36dp"
+            android:paddingBottom="40dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Login" />
 
         <EditText
             android:id="@+id/loginEmail"
@@ -28,6 +35,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="sans-serif-medium"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -36,20 +45,37 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
+            android:layout_marginBottom="20dp"
             android:inputType="textPassword" />
 
         <Button
             android:id="@+id/button11"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.01"
             android:onClick="StartLogin"
-            android:text="Log in" />
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="7dp"
+            android:text="Log in"
+            android:textAllCaps="false"
+            android:backgroundTint="#428740"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/button12"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="GoToRegister"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.01"
+            android:textSize="20dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="30dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#063705"
             android:text="Register New Account" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,15 @@ public class CustomAdaptorNameDescSwitch extends ArrayAdapter<PingBackImageSwitc
             sname.setChecked(status);
             tname.setText(currentUser.getName());
             descname.setText(currentUser.getDescription());
+
+            tname.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    Toast.makeText(getContext(), "Hello", Toast.LENGTH_SHORT).show();
+                    //FUNCTION HERE
+                }
+            });
 
         }catch (Exception e){
             System.out.println(e);

@@ -19,6 +19,9 @@
             android:orientation="vertical">
 
             <TextView
+                android:focusableInTouchMode="false"
+                android:clickable="false"
+                android:focusable="false"
                 android:id="@+id/customLay2Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
