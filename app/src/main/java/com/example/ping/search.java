@@ -64,7 +64,6 @@ public class search extends Fragment {
 
     public void SearchUserName(){
         //Search function here
-        startActivity(new Intent(getContext(),PingConfirmNewPing_PingBacks.class));
     }
 
     @Override

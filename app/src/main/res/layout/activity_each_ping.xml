@@ -27,7 +27,7 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_margin="10dp"
-            android:background="@tools:sample/avatars" />
+            android:background="@drawable/scenery" />
 
         <EditText
             android:id="@+id/editTextTextPersonName"
