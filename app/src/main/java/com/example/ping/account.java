@@ -2,11 +2,28 @@ package com.example.ping;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +70,91 @@ public class account extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    String name;
+    int connections=0;
+    FirebaseUser user;
+    TextView nameTV, connectionsTV;
+
+    ArrayList<Ping> arrayList=new ArrayList<>();
+    CustomAdaptorAccountPagePings customAdaptor;
+    ListView listView;
+    ProgressBar progressBar;
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        progressBar=getActivity().findViewById((R.id.AccountPageProgress));
+        progressBar.setVisibility(View.VISIBLE);
+        nameTV=getActivity().findViewById(R.id.accountPageName);
+        connectionsTV=getActivity().findViewById(R.id.accountPageConnections);
+        user=FirebaseAuth.getInstance().getCurrentUser();
+        listView=getActivity().findViewById(R.id.accountPageListView);
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("name");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                name=snapshot.getValue().toString();
+                findConnections();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    void findConnections(){
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("companions");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    connections+=1;
+                    searchPings();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    void searchPings(){
+        nameTV.setText(name);
+        connectionsTV.setText("Connections: "+connections);
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    Ping temp=new Ping();
+                    temp=snapshot1.getValue(Ping.class);
+                    arrayList.add(temp);
+                }
+                fillPingList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    void fillPingList(){
+        customAdaptor = new CustomAdaptorAccountPagePings(getContext(),arrayList);
+        listView.setAdapter(customAdaptor);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
