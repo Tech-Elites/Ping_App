@@ -18,7 +18,7 @@ public class PingRequest {
     }
 
 
-    public PingRequest(String visible, String desc, String address, String lat, String lng,String name,String userid) {
+    public PingRequest(String desc, String address, String lat, String lng,String name,String userid) {
         this.desc = desc;
         this.address = address;
         this.lat = lat;

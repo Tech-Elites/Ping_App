@@ -1,5 +1,6 @@
 package com.example.ping;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -74,11 +76,11 @@ public class pingspage extends Fragment {
 
     Button companions, pingbacks;
     CustomAdaptorHomeList customAdaptor;
-    ArrayList<PingRequest> arrayList;
+    static ArrayList<PingRequest> arrayList;
     ListView listView;
     FirebaseUser user;
     ProgressBar progressBar;
-
+    boolean inCompanion=true;
     void onCompanionClick(){
         progressBar.setVisibility(View.VISIBLE);
         companions.setBackgroundColor(Color.parseColor("#3C7BFB"));
@@ -142,6 +144,13 @@ public class pingspage extends Fragment {
         companions=getView().findViewById(R.id.homeCompanions);
         pingbacks=getView().findViewById(R.id.homePingBacks);
         listView=getView().findViewById(R.id.homePageListView);
+        inCompanion=true;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onListClick(position);
+            }
+        });
         user= FirebaseAuth.getInstance().getCurrentUser();
         progressBar=getView().findViewById(R.id.homePageProgress);
         companions.setOnClickListener(new View.OnClickListener()
@@ -150,6 +159,7 @@ public class pingspage extends Fragment {
             public void onClick(View v)
             {
                 onCompanionClick();
+                inCompanion=true;
             }
         });
         pingbacks.setOnClickListener(new View.OnClickListener()
@@ -158,9 +168,18 @@ public class pingspage extends Fragment {
             public void onClick(View v)
             {
                 onPingbacksClick();
+                inCompanion=false;
             }
         });
         onCompanionClick();
+    }
+    void onListClick(int position)
+    {
+        //call the next activity
+        Intent i=new Intent(getActivity(),ViewPing.class);
+        i.putExtra("index",position);
+        i.putExtra("inCompanion",inCompanion);
+        startActivity(i);
     }
 
     @Override
