@@ -23,7 +23,7 @@
             <TextView
                 android:id="@+id/customLay2Name"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:clickable="false"
                 android:padding="5dp"
                 android:focusable="false"
@@ -36,11 +36,11 @@
             <TextView
                 android:id="@+id/customLay2Desc"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:fontFamily="@font/nexabold"
-                android:paddingTop="5dp"
+                android:padding="5dp"
                 android:textSize="15dp" />
 
         </LinearLayout>

@@ -33,7 +33,7 @@
         <activity
             android:name=".LandingPage"
             android:label=""
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+             />
         <activity
             android:name=".RegisterPage"
             android:label="" />

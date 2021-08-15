@@ -393,6 +393,13 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                     {
                         addPingBack_s(selectedIdsStrangers.get(n+1),n+1,p);
                     }
+                    else
+                    {
+                        if(PingConfirmNewPing.selectedIds.size()==0)
+                        {
+                            AddPing();
+                        }
+                    }
                 }
             }
         });
@@ -430,7 +437,10 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 HashMap<String,String> h=p.returnPingRequest();
                 addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
             }
-
+            if(PingConfirmNewPing.selectedIds.size()==0&&selectedIdsStrangers.size()==0)
+            {
+                AddPing();
+            }
 
         }
     }
