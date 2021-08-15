@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp"
+        android:padding="10dp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:clickable="false"
+                android:padding="5dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/nexabold"
@@ -46,9 +47,9 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_weight="3"
+
             android:background="@drawable/scenery"
             android:padding="5dp" />
 
@@ -56,7 +57,7 @@
             android:id="@+id/customLay2Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:padding="10dp"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

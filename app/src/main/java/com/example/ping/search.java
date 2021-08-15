@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,7 +75,7 @@ public class search extends Fragment {
         }
     }
 
-    Button searchButton;
+    ImageButton searchButton;
     EditText searchText;
     String searchVal;
     TextView searchPageCountText;

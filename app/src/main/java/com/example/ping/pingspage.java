@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,6 +97,10 @@ public class pingspage extends Fragment {
     ListView listView;
     FirebaseUser user;
     ProgressBar progressBar;
+
+    ImageView imageNoResult;
+    TextView textNoResult;
+
     boolean inCompanion=true;
     void onCompanionClick(){
         progressBar.setVisibility(View.VISIBLE);
@@ -116,6 +122,15 @@ public class pingspage extends Fragment {
                     temp=snapshot1.getValue(PingRequest.class);
                     arrayList.add(temp);
                     pingIDForDelete.add(snapshot1.getKey());
+                }
+                if(arrayList.isEmpty()){
+
+                    imageNoResult.setVisibility(View.VISIBLE);
+                    textNoResult.setVisibility(View.VISIBLE);
+                }
+                else{
+                    imageNoResult.setVisibility(View.INVISIBLE);
+                    textNoResult.setVisibility(View.INVISIBLE);
                 }
                 customAdaptor=new CustomAdaptorHomeList(getContext(),arrayList);
                 listView.setAdapter(customAdaptor);
@@ -151,6 +166,15 @@ public class pingspage extends Fragment {
                     pingIDForDelete.add(snapshot1.getKey());
                     arrayList.add(temp);
                 }
+                if(arrayList.isEmpty()){
+
+                    imageNoResult.setVisibility(View.VISIBLE);
+                    textNoResult.setVisibility(View.VISIBLE);
+                }
+                else{
+                    imageNoResult.setVisibility(View.INVISIBLE);
+                    textNoResult.setVisibility(View.INVISIBLE);
+                }
                 customAdaptor=new CustomAdaptorHomeList(getContext(),arrayList);
                 listView.setAdapter(customAdaptor);
                 progressBar.setVisibility(View.INVISIBLE);
@@ -169,6 +193,10 @@ public class pingspage extends Fragment {
         companions=getView().findViewById(R.id.homeCompanions);
         pingbacks=getView().findViewById(R.id.homePingBacks);
         listView=getView().findViewById(R.id.homePageListView);
+
+
+        imageNoResult=getActivity().findViewById(R.id.homeaccountNoresultImage);
+        textNoResult=getActivity().findViewById(R.id.homeaccountNoresultText);
         inCompanion=true;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
