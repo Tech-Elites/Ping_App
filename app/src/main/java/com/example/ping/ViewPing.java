@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,10 +26,10 @@ public class ViewPing extends AppCompatActivity {
 
     Button Ping_back_Accept;
     TextView desc,address;
-    boolean inCompanion;
-    int index;
-
+    boolean inCompanion,fromAccount;
     String currentUserName;
+    int index;
+    Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +37,10 @@ public class ViewPing extends AppCompatActivity {
         Ping_back_Accept=findViewById(R.id.viewPingAcceptOrPingBack);
         desc=findViewById(R.id.viewPingDesc);
         address=findViewById(R.id.viewPingAddress);
-        Intent i=getIntent();
-        inCompanion=i.getBooleanExtra("inCompanion",false);
+
+        i=getIntent();
+        if(i.hasExtra("inCompanion"))
+            inCompanion=i.getBooleanExtra("inCompanion",false);
         index=i.getIntExtra("index",0);
         if(inCompanion)
         {
@@ -50,15 +50,36 @@ public class ViewPing extends AppCompatActivity {
         {
             Ping_back_Accept.setText("Accept");
         }
-        desc.setText(pingspage.arrayList.get(index).getDesc());
-        address.setText(pingspage.arrayList.get(index).getAddress());
+        if(i.hasExtra("fromAccount"))
+        {
+            desc.setText(EachPersonAccount.arrayList.get(index).getDesc());
+            address.setText(EachPersonAccount.arrayList.get(index).getAddress());
+        }
+        else
+        {
+            desc.setText(pingspage.arrayList.get(index).getDesc());
+            address.setText(pingspage.arrayList.get(index).getAddress());
 
+        }
+
+    }
+    void addNotificationToOther(PingRequest toBeAddedPingRequest,String currentAcceptingUID){
+        PingRequest otherUser=pingspage.arrayList.get(index);
+        String otherPersonsUid=otherUser.getUserid();
+        FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("notifications").push().setValue(toBeAddedPingRequest.returnPingRequest());
+        FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("ping_back_from_").child(pingspage.pingIDForDelete.get(index)).getRef().removeValue();
+        finish();
     }
     public void OnClickPingBackAccept(View view)
     {
         if(inCompanion)
         {
-            PingBackFunc();
+            if(!i.hasExtra("fromAccount"))
+                PingBackFunc();
+            else
+            {
+                PingBackFromAccount();
+            }
         }
         else
         {
@@ -78,33 +99,11 @@ public class ViewPing extends AppCompatActivity {
 
                 }
             });
-
-
-
-//            Toast.makeText(this, , Toast.LENGTH_SHORT).show();
-            //pingspage.arrayList.get(index).getUserid();
-
         }
     }
-
-    void addNotificationToOther(PingRequest toBeAddedPingRequest,String currentAcceptingUID){
-        PingRequest otherUser=pingspage.arrayList.get(index);
-        String otherPersonsUid=otherUser.getUserid();
-        FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("notifications").push().setValue(toBeAddedPingRequest.returnPingRequest());
-        FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("ping_back_from_").child(pingspage.pingIDForDelete.get(index)).getRef().removeValue();
-        finish();
-    }
-
-    void PingBackFunc()
+    void PingBackFromAccount()
     {
-        Intent i=new Intent(this,PingBackForm.class);
-        i.putExtra("lat",pingspage.arrayList.get(index).getLat());
-        i.putExtra("lng",pingspage.arrayList.get(index).getLng());
-        i.putExtra("index",index);
-        finish();
-        startActivity(i);
-
-        /*FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -140,7 +139,7 @@ public class ViewPing extends AppCompatActivity {
 
                     }
                     float result[]=new float[1];
-                    Location.distanceBetween(lat,lng,Double.parseDouble(pingspage.arrayList.get(index).getLat()),Double.parseDouble(pingspage.arrayList.get(index).getLng()),result);
+                    Location.distanceBetween(lat,lng,Double.parseDouble(EachPersonAccount.arrayList.get(index).getLat()),Double.parseDouble(EachPersonAccount.arrayList.get(index).getLng()),result);
 
                     if(result[0]<150)
                     {
@@ -160,7 +159,8 @@ public class ViewPing extends AppCompatActivity {
                                         i.putExtra("long",""+lng_);
                                         i.putExtra("desc",desc_);
                                         i.putExtra("address",address_);
-                                        i.putExtra("ping_back_id",pingspage.arrayList.get(index).getUserid());
+                                        i.putExtra("ping_back_id",EachPersonAccount.uid);
+                                        i.putExtra("addPing",false);
                                         startActivity(i);
                                     }
                                 })
@@ -171,7 +171,13 @@ public class ViewPing extends AppCompatActivity {
                 }
                 if(count==0)
                 {
-
+                    Intent i=new Intent(ViewPing.this,PingBackForm.class);
+                    i.putExtra("lat",EachPersonAccount.arrayList.get(index).getLat());
+                    i.putExtra("lng",EachPersonAccount.arrayList.get(index).getLng());
+                    i.putExtra("index",index);
+                    i.putExtra("fromAccount",true);
+                    finish();
+                    startActivity(i);
                 }
             }
 
@@ -179,7 +185,19 @@ public class ViewPing extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });*/
+        });
+    }
+
+    void PingBackFunc()
+    {
+        Intent i=new Intent(this,PingBackForm.class);
+        i.putExtra("lat",pingspage.arrayList.get(index).getLat());
+        i.putExtra("lng",pingspage.arrayList.get(index).getLng());
+        i.putExtra("index",index);
+        finish();
+        startActivity(i);
+
+
     }
 
 

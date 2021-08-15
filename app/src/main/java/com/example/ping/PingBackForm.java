@@ -42,19 +42,20 @@ public class PingBackForm extends AppCompatActivity {
     SwitchCompat visibile;
     Button submit;
     int index;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_back_form);
-        Intent i=getIntent();
+        intent=getIntent();
         addressView=findViewById(R.id.addressPingBackFormPage);
         desc=findViewById(R.id.PingBackFormDescription);
         visibile=findViewById(R.id.privateSwitchPingBackForm);
         submit=findViewById(R.id.createPingPingBackForm);
         submit.setEnabled(false);
-        lat=Double.parseDouble(i.getStringExtra("lat"));
-        lng=Double.parseDouble(i.getStringExtra("lng"));
-        index=i.getIntExtra("index",-1);
+        lat=Double.parseDouble(intent.getStringExtra("lat"));
+        lng=Double.parseDouble(intent.getStringExtra("lng"));
+        index=intent.getIntExtra("index",-1);
         LocationServices();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -177,8 +178,15 @@ public class PingBackForm extends AppCompatActivity {
                                 i.putExtra("long",lon);
                                 i.putExtra("desc",desc.getText().toString());
                                 i.putExtra("address",addressView.getText().toString());
-                                i.putExtra("ping_back_id",pingspage.arrayList.get(index).getUserid());
-                                i.putExtra("ping_id_delete",pingspage.pingIDForDelete.get(index));
+                                if(!intent.hasExtra("fromAccount"))
+                                {
+                                    i.putExtra("ping_back_id",pingspage.arrayList.get(index).getUserid());
+                                    i.putExtra("ping_id_delete",pingspage.pingIDForDelete.get(index));
+                                }
+                                else
+                                {
+                                    i.putExtra("ping_back_id",EachPersonAccount.uid);
+                                }
                                 startActivity(i);
 
 

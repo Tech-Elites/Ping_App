@@ -49,7 +49,6 @@ public class PingConfirmNewPing extends AppCompatActivity {
         if(i.hasExtra("ping_id_delete"))
             ping_id_delete=i.getStringExtra("ping_id_delete");
         listView=findViewById(R.id.companionsListView);
-
         GetTheIDS();
     }
 
@@ -95,7 +94,8 @@ public class PingConfirmNewPing extends AppCompatActivity {
                             companionIds.add(snapshot1.getValue().toString());
                         Toast.makeText(PingConfirmNewPing.this, snapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
                     }
-                    fillTheList(companionIds.get(0),0);
+                    if(companionIds.size()>0)
+                        fillTheList(companionIds.get(0),0);
                 }
 
                 @Override
@@ -142,6 +142,9 @@ public class PingConfirmNewPing extends AppCompatActivity {
             intent.putExtra("ping_back_id",ping_back_id);
         if(i.hasExtra("ping_id_delete"))
             intent.putExtra("ping_id_delete",ping_id_delete);
+        if(i.hasExtra("addPing"))
+            intent.putExtra("addPing",false);
         startActivity(intent);
+
     }
 }

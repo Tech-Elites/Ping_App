@@ -133,10 +133,12 @@ public class account extends Fragment {
         nameTV.setText(name);
         connectionsTV.setText("Close Friends: 0");
         connectionsTV.setText("Connections: "+connections);
+
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                arrayList.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                 {
                     Ping temp=new Ping();
