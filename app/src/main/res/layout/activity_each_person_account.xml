@@ -17,6 +17,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/EachaccountNoresultText"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No pings to display."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EachaccountNoresultImage" />
+
+    <ImageView
+        android:id="@+id/EachaccountNoresultImage"
+        android:layout_width="240dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="30dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EachAccountPageProgress"
+        android:background="@drawable/catafk" />
+
     <LinearLayout
         android:layout_marginTop="30dp"
         android:id="@+id/linearLayout2"
@@ -34,11 +56,11 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
                 android:padding="10dp"
-                android:src="@drawable/sona" />
+                android:background="@drawable/profilephoto" />
 
             <LinearLayout
                 android:layout_width="match_parent"

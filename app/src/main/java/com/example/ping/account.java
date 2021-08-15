@@ -10,6 +10,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -81,6 +84,8 @@ public class account extends Fragment {
     CustomAdaptorAccountPagePings customAdaptor;
     ListView listView;
     ProgressBar progressBar;
+    ImageView imageNoResult;
+    TextView textNoResult;
 
 
     @Override
@@ -93,6 +98,8 @@ public class account extends Fragment {
         user=FirebaseAuth.getInstance().getCurrentUser();
         closeTV=getActivity().findViewById(R.id.accountPageCloseFriends);
         listView=getActivity().findViewById(R.id.accountPageListView);
+        imageNoResult=getActivity().findViewById(R.id.accountNoresultImage);
+        textNoResult=getActivity().findViewById(R.id.accountNoresultText);
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("name");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -156,6 +163,10 @@ public class account extends Fragment {
     }
 
     void fillPingList(){
+        if(arrayList.isEmpty()){
+            imageNoResult.setVisibility(View.VISIBLE);
+            textNoResult.setVisibility(View.VISIBLE);
+        }
         customAdaptor = new CustomAdaptorAccountPagePings(getContext(),arrayList);
         listView.setAdapter(customAdaptor);
         progressBar.setVisibility(View.INVISIBLE);

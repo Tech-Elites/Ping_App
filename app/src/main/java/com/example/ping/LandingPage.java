@@ -37,13 +37,14 @@ public class LandingPage extends AppCompatActivity {
 
     @Override
     public void onResume()
-    {  // After a pause OR at startup
+    {
         super.onResume();
         if(count>0){
             notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
-            notBut.setText(count);
         }
-        //Refresh your stuff here
+        else{
+            notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
+        }
     }
 
     @Override
@@ -59,10 +60,8 @@ public class LandingPage extends AppCompatActivity {
         setSupportActionBar(tb);
 
         notBut=findViewById(R.id.notificationIconButton);
-//        notBut.setBackground(ContextCompat.getDrawable(this, R.drawable.notification));
         notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
         username=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        boolean newNot=false;
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(username).child("notifications");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -74,7 +73,6 @@ public class LandingPage extends AppCompatActivity {
                 }
                 if(count>0){
                     notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
-//                    notBut.setText(count);
                 }
             }
 
