@@ -192,7 +192,7 @@ public class home extends Fragment {
                                 }
                             }
                             float result[]=new float[1];
-                            Location.distanceBetween(lng,lat,myLocation.longitude,myLocation.latitude,result);
+                            Location.distanceBetween(lat,lng,myLocation.latitude,myLocation.longitude,result);
                             Toast.makeText(getActivity(), "distance"+result[0], Toast.LENGTH_SHORT).show();
                             if(result[0]<150)
                             {

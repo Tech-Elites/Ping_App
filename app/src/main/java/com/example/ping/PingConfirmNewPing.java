@@ -31,19 +31,23 @@ public class PingConfirmNewPing extends AppCompatActivity {
 
     CustomAdaptorSingleValue customAdaptor;
     CompanionSwitchClass u1;
+    Intent i;
     static ArrayList<String> selectedIds=new ArrayList<>();
-    String address,desc,lat,lng,visible;
+    String address,desc,lat,lng,visible,ping_back_id="",ping_id_delete="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_confirm_new_ping);
-        Intent i=getIntent();
+        i=getIntent();
         address=i.getStringExtra("address");
         desc=i.getStringExtra("desc");
         lat=i.getStringExtra("lat");
         lng=i.getStringExtra("long");
         visible=i.getStringExtra("visible");
-
+        if(i.hasExtra("ping_back_id"))
+            ping_back_id=i.getStringExtra("ping_back_id");
+        if(i.hasExtra("ping_id_delete"))
+            ping_id_delete=i.getStringExtra("ping_id_delete");
         listView=findViewById(R.id.companionsListView);
 
         GetTheIDS();
@@ -87,7 +91,8 @@ public class PingConfirmNewPing extends AppCompatActivity {
                     companionIds.clear();
                     for(DataSnapshot snapshot1:snapshot.getChildren())
                     {
-                        companionIds.add(snapshot1.getValue().toString());
+                        if(snapshot1.getValue().toString().compareTo(ping_back_id)!=0)
+                            companionIds.add(snapshot1.getValue().toString());
                         Toast.makeText(PingConfirmNewPing.this, snapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
                     }
                     fillTheList(companionIds.get(0),0);
@@ -133,6 +138,10 @@ public class PingConfirmNewPing extends AppCompatActivity {
         intent.putExtra("long",lng);
         intent.putExtra("desc",desc);
         intent.putExtra("address",address);
+        if(i.hasExtra("ping_back_id"))
+            intent.putExtra("ping_back_id",ping_back_id);
+        if(i.hasExtra("ping_id_delete"))
+            intent.putExtra("ping_id_delete",ping_id_delete);
         startActivity(intent);
     }
 }

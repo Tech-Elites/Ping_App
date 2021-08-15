@@ -77,15 +77,17 @@ public class pingspage extends Fragment {
     Button companions, pingbacks;
     CustomAdaptorHomeList customAdaptor;
     static ArrayList<PingRequest> arrayList;
+    static ArrayList<String> pingIDForDelete=new ArrayList<>();
     ListView listView;
     FirebaseUser user;
     ProgressBar progressBar;
     boolean inCompanion=true;
     void onCompanionClick(){
         progressBar.setVisibility(View.VISIBLE);
-        companions.setBackgroundColor(companions.getContext().getResources().getColor(R.color.myblue));
-        pingbacks.setBackgroundColor(pingbacks.getContext().getResources().getColor(R.color.white));
+        companions.setBackgroundColor(Color.parseColor("#3C7BFB"));
+        pingbacks.setBackgroundColor(Color.parseColor("#FFFFFF"));
         arrayList=new ArrayList<>();
+        pingIDForDelete.clear();
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,6 +97,7 @@ public class pingspage extends Fragment {
                     PingRequest temp;
                     temp=snapshot1.getValue(PingRequest.class);
                     arrayList.add(temp);
+                    pingIDForDelete.add(snapshot1.getKey());
                 }
                 customAdaptor=new CustomAdaptorHomeList(getContext(),arrayList);
                 listView.setAdapter(customAdaptor);
@@ -115,6 +118,7 @@ public class pingspage extends Fragment {
         pingbacks.setBackgroundColor(Color.parseColor("#3C7BFB"));
         companions.setBackgroundColor(Color.parseColor("#FFFFFF"));
         arrayList=new ArrayList<>();
+        pingIDForDelete.clear();
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_back_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -123,7 +127,7 @@ public class pingspage extends Fragment {
                 {
                     PingRequest temp;
                     temp=snapshot1.getValue(PingRequest.class);
-
+                    pingIDForDelete.add(snapshot1.getKey());
                     arrayList.add(temp);
                 }
                 customAdaptor=new CustomAdaptorHomeList(getContext(),arrayList);
