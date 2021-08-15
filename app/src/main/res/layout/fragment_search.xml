@@ -20,7 +20,7 @@
             android:padding="13dp"
             android:textSize="25dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Search for connections:" />
+            android:text="Search:" />
 
         <LinearLayout
             android:layout_width="match_parent"

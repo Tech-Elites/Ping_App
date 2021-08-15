@@ -41,7 +41,7 @@ public class LandingPage extends AppCompatActivity {
         super.onResume();
         if(count>0){
             notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
-            notBut.setText(count);
+            //notBut.setText(count);
         }
         //Refresh your stuff here
     }
