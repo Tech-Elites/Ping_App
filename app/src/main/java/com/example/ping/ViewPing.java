@@ -27,6 +27,7 @@ public class ViewPing extends AppCompatActivity {
     Button Ping_back_Accept;
     TextView desc,address;
     boolean inCompanion,fromAccount;
+    String currentUserName;
     int index;
     Intent i;
     @Override
@@ -62,6 +63,13 @@ public class ViewPing extends AppCompatActivity {
         }
 
     }
+    void addNotificationToOther(PingRequest toBeAddedPingRequest,String currentAcceptingUID){
+        PingRequest otherUser=pingspage.arrayList.get(index);
+        String otherPersonsUid=otherUser.getUserid();
+        FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("notifications").push().setValue(toBeAddedPingRequest.returnPingRequest());
+        FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("ping_back_from_").child(pingspage.pingIDForDelete.get(index)).getRef().removeValue();
+        finish();
+    }
     public void OnClickPingBackAccept(View view)
     {
         if(inCompanion)
@@ -75,8 +83,22 @@ public class ViewPing extends AppCompatActivity {
         }
         else
         {
-            //pingspage.arrayList.get(index).getUserid();
-            //pingspage.pingIDForDelete.get(index);
+            PingRequest otherUser=pingspage.arrayList.get(index);
+            String currentAcceptingUID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("name");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    currentUserName=snapshot.getValue().toString();
+                    PingRequest toBeAddedPingRequest = new PingRequest(otherUser.getDesc(), otherUser.getAddress(), otherUser.getLat(), otherUser.getLng(),currentUserName,currentAcceptingUID);
+                    addNotificationToOther(toBeAddedPingRequest,currentAcceptingUID);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
     void PingBackFromAccount()

@@ -94,7 +94,8 @@ public class PingConfirmNewPing extends AppCompatActivity {
                             companionIds.add(snapshot1.getValue().toString());
                         Toast.makeText(PingConfirmNewPing.this, snapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
                     }
-                    fillTheList(companionIds.get(0),0);
+                    if(companionIds.size()>0)
+                        fillTheList(companionIds.get(0),0);
                 }
 
                 @Override

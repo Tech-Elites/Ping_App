@@ -98,12 +98,14 @@ public class pingspage extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         companions.setBackgroundColor(Color.parseColor("#3C7BFB"));
         pingbacks.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        arrayList=new ArrayList<>();
-        pingIDForDelete.clear();
+
+
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                arrayList=new ArrayList<>();
+                pingIDForDelete.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                 {
                     PingRequest temp;
@@ -129,12 +131,13 @@ public class pingspage extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         pingbacks.setBackgroundColor(Color.parseColor("#3C7BFB"));
         companions.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        arrayList=new ArrayList<>();
-        pingIDForDelete.clear();
+
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_back_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                arrayList=new ArrayList<>();
+                pingIDForDelete.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                 {
                     PingRequest temp;
