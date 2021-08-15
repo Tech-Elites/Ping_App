@@ -3,11 +3,14 @@ package com.example.ping;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,9 +24,9 @@ import java.util.ArrayList;
 public class EachPersonAccount extends AppCompatActivity {
 
     TextView nameTV;
-    String uid,name;
+    static String uid,name;
 
-    ArrayList<Ping> arrayList=new ArrayList<>();
+    static ArrayList<Ping> arrayList=new ArrayList<>();
     CustomAdaptorAccountPagePings customAdaptor;
     ListView listView;
     ProgressBar progressBar;
@@ -34,7 +37,7 @@ public class EachPersonAccount extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
+                arrayList.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                 {
                     Ping temp=new Ping();
@@ -64,10 +67,24 @@ public class EachPersonAccount extends AppCompatActivity {
         nameTV=findViewById(R.id.EachaccountPageName);
         listView=findViewById(R.id.EachaccountPageListView);
         progressBar=findViewById(R.id.EachAccountPageProgress);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                OnClickList(position);
+            }
+        });
         uid=getIntent().getStringExtra("uid");
         name=getIntent().getStringExtra("name");
         nameTV.setText(name);
         setupDetails();
     }
+    void OnClickList(int position)
+    {
+        Intent i=new Intent(EachPersonAccount.this,ViewPing.class);
+        i.putExtra("index",position);
+        i.putExtra("inCompanion",true);
+        i.putExtra("fromAccount",true);
+        startActivity(i);
+    }
+
 }

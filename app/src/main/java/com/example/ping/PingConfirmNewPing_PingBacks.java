@@ -37,7 +37,7 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
     ArrayList<String> alltheIds=new ArrayList<>();
     ArrayList<String> allTheProbableIds=new ArrayList<>();
     double lat_d,lng_d;
-    boolean reshuffled=false;
+    boolean reshuffled=false,addPing=true;
     String ping_back_id,ping_id_delete="null";
     FirebaseUser u;
     @Override
@@ -48,12 +48,15 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
         address=i.getStringExtra("address");
         desc=i.getStringExtra("desc");
         lat=i.getStringExtra("lat");
+        addPing=true;
         lat_d=Double.parseDouble(lat);
         if(i.hasExtra("ping_back_id"))
         {
             ping_back_id=i.getStringExtra("ping_back_id");
             selectedIdsStrangers.add(ping_back_id);
         }
+        if(i.hasExtra("addPing"))
+            addPing=false;
         if(i.hasExtra("ping_id_delete"))
         {
             ping_id_delete=i.getStringExtra("ping_id_delete");
@@ -392,7 +395,13 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
             }
             if(ping_id_delete.compareTo("null")==0)
             {
-                AddPing();
+                if(addPing)
+                    AddPing();
+                else
+                {
+                    finishAffinity();
+                    startActivity(new Intent(PingConfirmNewPing_PingBacks.this,LandingPage.class));
+                }
             }
             else
             {
@@ -413,7 +422,13 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful())
                     {
-                        AddPing();
+                        if(addPing)
+                            AddPing();
+                        else
+                        {
+                            finishAffinity();
+                            startActivity(new Intent(PingConfirmNewPing_PingBacks.this,LandingPage.class));
+                        }
                     }
                 }
             });
