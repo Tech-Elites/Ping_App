@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:background="@drawable/lay2"
     tools:context=".PingConfirmNewPing">
 
     <LinearLayout
@@ -36,6 +38,12 @@
             android:onClick="companionListNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shadow"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/nexabold"
             android:text="Next" />
     </LinearLayout>
 

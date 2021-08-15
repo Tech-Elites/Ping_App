@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lay5"
     tools:context=".ViewPing">
 
     <LinearLayout
@@ -69,14 +70,26 @@
                 android:id="@+id/viewPingAcceptOrPingBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_shadow"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/nexabold"
                 android:onClick="OnClickPingBackAccept"/>
 
             <Button
                 android:id="@+id/viewPingseeOnMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_shadow"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/nexabold"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
                 android:layout_weight="1"
                 android:text="Open Map" />
         </LinearLayout>

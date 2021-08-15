@@ -26,6 +26,7 @@
                 android:textSize="20dp"
                 android:textColor="@color/black"
 
+                android:fontFamily="@font/nexabold"
                 android:text="TextView" />
 
             <TextView
@@ -34,15 +35,17 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/nexabold"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/HomeViewAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:textSize="13dp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/nexabold"
                 android:text="TextView" />
         </LinearLayout>
 

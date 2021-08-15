@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lay4"
     tools:context=".PingBackForm">
 
     <LinearLayout
@@ -11,6 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
+        android:paddingTop="40dp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="45dp">
 
@@ -18,7 +20,7 @@
             android:id="@+id/textView22323"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
             android:text="Ping"
             android:textColor="@color/black"
@@ -27,7 +29,7 @@
             android:id="@+id/textView222"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingTop="15dp"
             android:paddingBottom="5dp"
             android:text="Select Visibility"
@@ -36,6 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -43,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/nexabold"
                 android:textColor="@color/black"
                 android:layout_marginRight="20dp"
                 android:text="Private" />
@@ -63,7 +66,7 @@
             android:id="@+id/textView466"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
             android:text="Upload Media"
             android:textColor="@color/black" />
@@ -72,14 +75,20 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shadow"
+            android:fontFamily="@font/nexabold"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
             android:text="Upload Image" />
 
         <TextView
             android:id="@+id/textView4456"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingTop="40dp"
+            android:fontFamily="@font/nexabold"
+            android:paddingTop="20dp"
             android:text="Description:"
             android:textColor="@color/black" />
 
@@ -89,7 +98,7 @@
             android:layout_height="150dp"
             android:ems="10"
 
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:inputType="textMultiLine"
 
             android:paddingTop="20dp"
@@ -100,14 +109,21 @@
             android:id="@+id/addressPingBackFormPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingTop="40dp"
             android:text="Select your address-"
             android:textColor="@color/black" />
 
 
         <Button
+            android:background="@drawable/button_shadow"
+            android:fontFamily="@font/nexabold"
+            android:layout_marginTop="20dp"
             android:id="@+id/createPingPingBackForm"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send"

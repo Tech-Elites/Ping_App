@@ -2,10 +2,12 @@ package com.example.ping;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -96,8 +98,10 @@ public class pingspage extends Fragment {
     boolean inCompanion=true;
     void onCompanionClick(){
         progressBar.setVisibility(View.VISIBLE);
-        companions.setBackgroundColor(Color.parseColor("#3C7BFB"));
-        pingbacks.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        companions.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_shadow));
+        pingbacks.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.gradient_background_dummy));
+        pingbacks.setTextSize(15);
+        companions.setTextSize(20);
 
 
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_from_");
@@ -129,8 +133,10 @@ public class pingspage extends Fragment {
 
     void onPingbacksClick(){
         progressBar.setVisibility(View.VISIBLE);
-        pingbacks.setBackgroundColor(Color.parseColor("#3C7BFB"));
-        companions.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        pingbacks.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_shadow));
+        companions.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.gradient_background_dummy));
+        companions.setTextSize(15);
+        pingbacks.setTextSize(20);
 
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_back_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

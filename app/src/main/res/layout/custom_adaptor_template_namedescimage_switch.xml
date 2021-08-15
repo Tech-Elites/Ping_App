@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -26,7 +27,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/nexabold"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
@@ -37,7 +38,9 @@
                 android:layout_height="30dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:fontFamily="@font/nexabold"
+                android:paddingTop="5dp"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
