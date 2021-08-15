@@ -63,11 +63,40 @@ public class ViewPing extends AppCompatActivity {
         }
 
     }
+
+    void addToCompanions(String otherPersonsUid){
+        String currentAcceptingUID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("companions");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean temp=true;
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    if(snapshot1.getValue().toString().compareTo(otherPersonsUid)==0){
+                        temp=false;
+                    }
+                }
+                if(temp){
+                    FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("companions").push().setValue(otherPersonsUid);
+                    FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("companions").push().setValue(currentAcceptingUID);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     void addNotificationToOther(PingRequest toBeAddedPingRequest,String currentAcceptingUID){
         PingRequest otherUser=pingspage.arrayList.get(index);
         String otherPersonsUid=otherUser.getUserid();
         FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("notifications").push().setValue(toBeAddedPingRequest.returnPingRequest());
         FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("ping_back_from_").child(pingspage.pingIDForDelete.get(index)).getRef().removeValue();
+        addToCompanions(otherPersonsUid);
         finish();
     }
     public void OnClickPingBackAccept(View view)

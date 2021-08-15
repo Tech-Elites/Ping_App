@@ -32,9 +32,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="50dp"
-            android:textAlignment="center"
+            android:text="Login:"
+            android:textSize="40dp"
             android:fontFamily="@font/nexabold"
             android:textColor="#4C0404"
             android:layout_marginBottom="30dp"
