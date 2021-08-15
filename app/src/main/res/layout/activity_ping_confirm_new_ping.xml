@@ -19,10 +19,11 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingBottom="20dp"
+
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:text="Select Companions to ping to:" />
 
         <ListView

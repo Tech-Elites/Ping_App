@@ -22,7 +22,7 @@
             android:id="@+id/viewPingDesc123"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:textSize="30dp"
             android:textColor="@color/black"
             android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
@@ -37,33 +37,34 @@
         <TextView
             android:id="@+id/viewPingDesc"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:textSize="15dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/nexalight"
+            android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
             android:text="Description" />
         <TextView
             android:id="@+id/viewPingAddress123"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textColor="@color/black"
             android:fontFamily="@font/nexabold"
             android:text="Address:" />
         <TextView
             android:id="@+id/viewPingAddress"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:textSize="15dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/nexalight"
+            android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
-            android:text="Address" />
+             />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <Button

@@ -16,20 +16,21 @@
         <TextView
             android:id="@+id/textView8"
             android:layout_marginTop="30dp"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/nexabold"
+            android:textSize="40dp"
+
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Notification" />
+            android:text="Prompts" />
 
         <TextView
             android:id="@+id/notificationsEmpty"
 
             android:textColor="@color/black"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="15dp"
+            android:fontFamily="@font/nexabold"
+            android:textSize="20dp"
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

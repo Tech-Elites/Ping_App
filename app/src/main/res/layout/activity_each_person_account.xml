@@ -24,6 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No pings to display."
+        android:fontFamily="@font/nexabold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EachaccountNoresultImage" />
@@ -75,7 +78,7 @@
                     android:id="@+id/EachaccountPageName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/nexabold"
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="30dp" />
@@ -87,7 +90,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:padding="10dp"
             android:text="Pings:"
             android:textColor="@color/black"
@@ -96,7 +99,7 @@
         <ListView
             android:id="@+id/EachaccountPageListView"
             android:layout_width="match_parent"
-            android:layout_height="340dp" >
+            android:layout_height="340dp">
 
         </ListView>
     </LinearLayout>

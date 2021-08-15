@@ -19,11 +19,12 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:textColor="@color/black"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="20dp"
-            android:paddingVertical="20dp"
+            android:fontFamily="@font/nexabold"
+            android:textSize="25dp"
+
+            android:paddingVertical="10dp"
             android:layout_height="wrap_content"
-            android:text="Select Users from this area to ping back:" />
+            android:text="Select pings from this area to ping back to:" />
 
         <ListView
             android:id="@+id/newPingPingbackListView"

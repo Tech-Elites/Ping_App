@@ -8,7 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="myblue">#3C7BFB</color>
-
+    <color name="customGrey">#FF656565</color>
+    <color name="skyBlue">#44B4F5</color>
     <color name="theme_blue3">#5680E9</color>
     <color name="theme_blue2">#84CEEB</color>
     <color name="theme_blue1">#5AB9EA</color>
