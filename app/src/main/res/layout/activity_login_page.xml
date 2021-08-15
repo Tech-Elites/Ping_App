@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lay1"
+    android:background="@drawable/login"
     tools:context=".LoginPage">
 
     <ProgressBar
@@ -36,8 +36,8 @@
             android:textAlignment="center"
             android:textSize="40dp"
             android:fontFamily="@font/nexabold"
-            android:textColor="@color/myblue"
-            android:layout_marginBottom="50dp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="80dp"
             />
 
         <EditText
@@ -46,11 +46,12 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email"
-            android:textColorHighlight="@color/black"
-            android:backgroundTint="@color/black"
-            android:textColorHint="@color/black"
+            android:textColorHighlight="@color/white"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="60dp"
             android:fontFamily="@font/nexabold"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_marginVertical="10dp"
             android:inputType="textEmailAddress" />
 
@@ -60,11 +61,12 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:textColorHighlight="@color/black"
+            android:layout_marginLeft="60dp"
+            android:textColorHighlight="@color/white"
             android:fontFamily="@font/nexabold"
-            android:backgroundTint="@color/black"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:layout_marginBottom="20dp"
             android:inputType="textPassword" />
 
@@ -72,35 +74,35 @@
             android:id="@+id/button11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginLeft="60dp"
             android:fontFamily="@font/nexabold"
             android:textColor="@color/white"
             android:letterSpacing="0.01"
             android:onClick="StartLogin"
-            android:paddingHorizontal="100dp"
+            android:paddingHorizontal="50dp"
             android:paddingVertical="1dp"
             android:text="Log in"
             android:textAllCaps="false"
             android:background="@drawable/button_shadow"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/button12"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="GoToRegister"
             android:textAllCaps="false"
             android:fontFamily="@font/nexabold"
             android:textColor="@color/white"
             android:letterSpacing="0.01"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:paddingVertical="10dp"
             android:paddingHorizontal="30dp"
-            android:layout_gravity="center"
+            android:layout_marginLeft="60dp"
             android:background="@drawable/button_shadow"
-            android:text="Register New Account" />
+            android:text="Register an account" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
