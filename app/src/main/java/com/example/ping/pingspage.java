@@ -83,10 +83,10 @@ public class pingspage extends Fragment {
     boolean inCompanion=true;
     void onCompanionClick(){
         progressBar.setVisibility(View.VISIBLE);
-        companions.setBackgroundColor(Color.parseColor("#3C7BFB"));
-        pingbacks.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        companions.setBackgroundColor(companions.getContext().getResources().getColor(R.color.myblue));
+        pingbacks.setBackgroundColor(pingbacks.getContext().getResources().getColor(R.color.white));
         arrayList=new ArrayList<>();
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_from_c");
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,7 +115,7 @@ public class pingspage extends Fragment {
         pingbacks.setBackgroundColor(Color.parseColor("#3C7BFB"));
         companions.setBackgroundColor(Color.parseColor("#FFFFFF"));
         arrayList=new ArrayList<>();
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_back_from_s");
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("ping_back_from_");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

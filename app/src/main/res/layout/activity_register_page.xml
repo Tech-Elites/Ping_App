@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".RegisterPage">
 
     <LinearLayout
@@ -14,15 +15,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView9"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:textAlignment="center"
-            android:textSize="36dp"
-            android:paddingBottom="35dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Register" />
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textSize="50dp"
+            android:fontFamily="@font/nexabold"
+            android:textColor="#4C0404"
+            android:layout_marginBottom="30dp"
+            />
 
         <EditText
             android:id="@+id/registerUserName"
@@ -31,7 +32,11 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:layout_marginVertical="10dp"
-            android:fontFamily="sans-serif-medium"
+            android:textColorHighlight="@color/white"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/theme_grey"
+            android:fontFamily="@font/nexabold"
+            android:textColor="@color/white"
             android:hint="Name"
             android:text="" />
 
@@ -42,7 +47,11 @@
             android:ems="10"
             android:hint="Email"
             android:layout_marginVertical="10dp"
-            android:fontFamily="sans-serif-medium"
+            android:textColorHighlight="@color/white"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/theme_grey"
+            android:fontFamily="@font/nexabold"
+            android:textColor="@color/white"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -51,7 +60,11 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_marginVertical="10dp"
-            android:fontFamily="sans-serif-medium"
+            android:textColorHighlight="@color/white"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/theme_grey"
+            android:fontFamily="@font/nexabold"
+            android:textColor="@color/white"
             android:hint="Password"
             android:inputType="textPassword" />
 
@@ -59,15 +72,15 @@
             android:id="@+id/button13"
             android:onClick="RegisterAccount"
             android:textAllCaps="false"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:letterSpacing="0.01"
             android:paddingHorizontal="30dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="15dp"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#428740"
+            android:backgroundTint="@color/theme_blue1"
             android:textSize="20dp"
             android:text="Register" />
 
