@@ -198,12 +198,12 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                                         float distance[]=new float[1];
                                         Location.distanceBetween(lng,lat,lng_d,lat_d,distance);
                                         //check condition here
-                                        /*if(distance[0]<30)
+                                        if(distance[0]<150)
                                         {
+                                            ping=new Ping(visible,desc,address,lat+"",lng+"");
+                                            break;
 
-                                        }*/
-                                        ping=new Ping(visible,desc,address,lat+"",lng+"");
-                                        break;
+                                        }
                                     }
                                 }
                             }
