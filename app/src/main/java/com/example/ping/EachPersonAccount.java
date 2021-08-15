@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class EachPersonAccount extends AppCompatActivity {
     CustomAdaptorAccountPagePings customAdaptor;
     ListView listView;
     ProgressBar progressBar;
+    ImageView imageNoResult;
+    TextView textNoResult;
 
     void setupDetails(){
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(uid).child("pings");
@@ -46,6 +49,10 @@ public class EachPersonAccount extends AppCompatActivity {
                         arrayList.add(temp);
                 }
 
+                if(arrayList.isEmpty()){
+                    imageNoResult.setVisibility(View.VISIBLE);
+                    textNoResult.setVisibility(View.VISIBLE);
+                }
                 customAdaptor=new CustomAdaptorAccountPagePings(EachPersonAccount.this,arrayList);
                 listView.setAdapter(customAdaptor);
                 progressBar.setVisibility(View.INVISIBLE);
@@ -67,6 +74,8 @@ public class EachPersonAccount extends AppCompatActivity {
         nameTV=findViewById(R.id.EachaccountPageName);
         listView=findViewById(R.id.EachaccountPageListView);
         progressBar=findViewById(R.id.EachAccountPageProgress);
+        imageNoResult=findViewById(R.id.EachaccountNoresultImage);
+        textNoResult=findViewById(R.id.EachaccountNoresultText);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
