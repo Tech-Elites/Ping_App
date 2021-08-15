@@ -7,7 +7,10 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +35,10 @@ public class PingConfirmNewPing extends AppCompatActivity {
     CustomAdaptorSingleValue customAdaptor;
     CompanionSwitchClass u1;
     Intent i;
+    ProgressBar progressBar;
+
+    ImageView image_cat;
+    TextView warning;
     static ArrayList<String> selectedIds=new ArrayList<>();
     String address,desc,lat,lng,visible,ping_back_id="",ping_id_delete="";
     @Override
@@ -39,6 +46,10 @@ public class PingConfirmNewPing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_confirm_new_ping);
         i=getIntent();
+        progressBar=findViewById(R.id.progressBarConfirmPing);
+        progressBar.setVisibility(View.VISIBLE);
+        image_cat=findViewById(R.id.imageViewPing);
+        warning=findViewById(R.id.textViewPing);
         address=i.getStringExtra("address");
         desc=i.getStringExtra("desc");
         lat=i.getStringExtra("lat");
@@ -92,10 +103,16 @@ public class PingConfirmNewPing extends AppCompatActivity {
                     {
                         if(snapshot1.getValue().toString().compareTo(ping_back_id)!=0)
                             companionIds.add(snapshot1.getValue().toString());
-                        Toast.makeText(PingConfirmNewPing.this, snapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
+
                     }
                     if(companionIds.size()>0)
                         fillTheList(companionIds.get(0),0);
+                    else
+                    {
+                        image_cat.setVisibility(View.VISIBLE);
+                        warning.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override
@@ -110,6 +127,7 @@ public class PingConfirmNewPing extends AppCompatActivity {
         try {
             customAdaptor = new CustomAdaptorSingleValue(this,arrayList);
             listView.setAdapter(customAdaptor);
+            progressBar.setVisibility(View.INVISIBLE);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,7 +139,7 @@ public class PingConfirmNewPing extends AppCompatActivity {
         View v;
         SwitchCompat sw;
         selectedIds.clear();
-        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+
         for(int i=0;i<listView.getCount();i++)
         {
             v=listView.getChildAt(i);

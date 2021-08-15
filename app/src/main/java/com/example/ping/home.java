@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,6 +103,7 @@ public class home extends Fragment {
     Button setLocation,createPing;
     LocationManager locationManager;
     LocationListener locationListener;
+    ProgressBar progressBar;
     TextView addressView;
     EditText description;
     LatLng myLocation;
@@ -111,6 +113,7 @@ public class home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setLocation=getView().findViewById(R.id.buttonsetLocationHome);
+        progressBar=getView().findViewById(R.id.progressBarHome);
         createPing=getView().findViewById(R.id.createPingHome);
         addressView=getView().findViewById(R.id.addressHomePage);
         switchCompat=getView().findViewById(R.id.privateSwitchHome);
@@ -118,7 +121,7 @@ public class home extends Fragment {
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getActivity(), ""+isChecked, Toast.LENGTH_SHORT).show();
+
             }
         });
         setLocation.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +147,7 @@ public class home extends Fragment {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             {
                 //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-                Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
@@ -152,7 +155,8 @@ public class home extends Fragment {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Toast.makeText(getActivity(), "Here in location", Toast.LENGTH_SHORT).show();
+
+        progressBar.setVisibility(View.VISIBLE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
     void createPing()
@@ -193,7 +197,7 @@ public class home extends Fragment {
                             }
                             float result[]=new float[1];
                             Location.distanceBetween(lat,lng,myLocation.latitude,myLocation.longitude,result);
-                            Toast.makeText(getActivity(), "distance"+result[0], Toast.LENGTH_SHORT).show();
+
                             if(result[0]<150)
                             {
                                 count++;
@@ -215,7 +219,7 @@ public class home extends Fragment {
                                             String visible="true";
                                             if(switchCompat.isChecked())
                                             {
-                                                Toast.makeText(getActivity(), "Activated", Toast.LENGTH_SHORT).show();
+
                                                 visible="false";
                                             }
                                             final String finalVisible=visible;
@@ -264,7 +268,7 @@ public class home extends Fragment {
             public void onLocationChanged(Location location) {
                 myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 Geocoder geocoder;
-                Toast.makeText(getActivity(), "Here in on location changed", Toast.LENGTH_SHORT).show();
+
                 List<Address> addresses = null;
                 geocoder = new Geocoder(getActivity(), Locale.getDefault());
                 try {
@@ -276,6 +280,7 @@ public class home extends Fragment {
 
                 try {
                     addressView.setText(addresses.get(0).getAddressLine(0));
+                    progressBar.setVisibility(View.INVISIBLE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

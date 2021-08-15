@@ -48,8 +48,7 @@ public class CustomAdaptorNameDescSwitch extends ArrayAdapter<PingBackImageSwitc
 
                 @Override
                 public void onClick(View arg0) {
-                    Toast.makeText(getContext(), "Hello", Toast.LENGTH_SHORT).show();
-                    //FUNCTION HERE
+
                 }
             });
 

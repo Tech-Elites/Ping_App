@@ -9,7 +9,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,19 +35,26 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
     ArrayList<PingBackImageSwitchClass> arrayList=new ArrayList<>();
     CustomAdaptorNameDescSwitch customAdaptor;
     PingBackImageSwitchClass u1;
+    ProgressBar progressBar;
+    ImageView image_cat;
+    TextView warning;
     String address,desc,lat,lng,visible,curr_user_name="";
     ArrayList<String> selectedIdsStrangers=new ArrayList<>();
     ArrayList<String> alltheIds=new ArrayList<>();
     ArrayList<String> allTheProbableIds=new ArrayList<>();
     double lat_d,lng_d;
     boolean reshuffled=false,addPing=true;
-    String ping_back_id,ping_id_delete="null";
+    String ping_back_id="null",ping_id_delete="null";
     FirebaseUser u;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_confirm_new_ping__ping_backs);
         Intent i=getIntent();
+        progressBar=findViewById(R.id.progressBarConfirmPingBacks);
+        progressBar.setVisibility(View.VISIBLE);
+        image_cat=findViewById(R.id.imageViewPingBacks);
+        warning=findViewById(R.id.textViewPingsBack);
         address=i.getStringExtra("address");
         desc=i.getStringExtra("desc");
         lat=i.getStringExtra("lat");
@@ -87,7 +97,7 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot dataSnapshot:snapshot.getChildren())
                     {
-                        if(dataSnapshot.getKey().compareTo(u.getUid())!=0)
+                        if(dataSnapshot.getKey().compareTo(u.getUid())!=0&&dataSnapshot.getKey().compareTo(ping_back_id)!=0)
                         {
                             String id=dataSnapshot.getKey();
                             int flag1=0;
@@ -224,10 +234,19 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
 
     void createAdaptor()
     {
-        customAdaptor = new CustomAdaptorNameDescSwitch(this,arrayList);
-        listView.setAdapter(customAdaptor);
-
-        findTheCurrUser();
+        try {
+            customAdaptor = new CustomAdaptorNameDescSwitch(this,arrayList);
+            listView.setAdapter(customAdaptor);
+            if(arrayList.size()==0)
+            {
+                image_cat.setVisibility(View.VISIBLE);
+                warning.setVisibility(View.VISIBLE);
+            }
+            progressBar.setVisibility(View.INVISIBLE);
+            findTheCurrUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     void findTheCurrUser()
     {
@@ -327,7 +346,7 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 HashMap<String,String> h=p.returnPingRequest();
                 addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
             }
-            AddPing();
+
         }
     }
     public void addToPing_c(String userId,int n,HashMap p)
@@ -340,6 +359,24 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                     if(n<(PingConfirmNewPing.selectedIds.size()-1))
                     {
                         addToPing_c(PingConfirmNewPing.selectedIds.get(n+1),n+1,p);
+                    }
+                    else
+                    {
+                        if(ping_id_delete.compareTo("null")==0)
+                        {
+                            if(addPing)
+                                AddPing();
+                            else
+                            {
+                                finishAffinity();
+                                startActivity(new Intent(PingConfirmNewPing_PingBacks.this,LandingPage.class));
+                            }
+                        }
+                        else
+                        {
+
+                            deletePing();
+                        }
                     }
                 }
             }
@@ -363,10 +400,10 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
 
 
     public void newPingPingbackProceed(View view) {
-        Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
+
         if(curr_user_name!=""&&reshuffled)
         {
-            Toast.makeText(this, "here1", Toast.LENGTH_SHORT).show();
+
             //Toast.makeText(this, "size ping confirm - "+PingConfirmNewPing.selectedIds.size(), Toast.LENGTH_SHORT).show();
             View v;
             SwitchCompat sw;
@@ -393,21 +430,7 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 HashMap<String,String> h=p.returnPingRequest();
                 addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
             }
-            if(ping_id_delete.compareTo("null")==0)
-            {
-                if(addPing)
-                    AddPing();
-                else
-                {
-                    finishAffinity();
-                    startActivity(new Intent(PingConfirmNewPing_PingBacks.this,LandingPage.class));
-                }
-            }
-            else
-            {
-                Toast.makeText(this, ""+ping_id_delete, Toast.LENGTH_SHORT).show();
-                deletePing();
-            }
+
 
         }
     }

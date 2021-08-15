@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class PingBackForm extends AppCompatActivity {
     TextView addressView;
     EditText desc;
     SwitchCompat visibile;
+    ProgressBar progressBar;
     Button submit;
     int index;
     Intent intent;
@@ -48,6 +50,8 @@ public class PingBackForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_back_form);
         intent=getIntent();
+        progressBar=findViewById(R.id.progressbarPingBack);
+        progressBar.setVisibility(View.VISIBLE);
         addressView=findViewById(R.id.addressPingBackFormPage);
         desc=findViewById(R.id.PingBackFormDescription);
         visibile=findViewById(R.id.privateSwitchPingBackForm);
@@ -72,8 +76,7 @@ public class PingBackForm extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             {
                 //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-            }
+                           }
         }
     }
     void LocationServices()
@@ -109,10 +112,12 @@ public class PingBackForm extends AppCompatActivity {
                                     }
                                 })
                                 .show();
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                     else
                     {
                         submit.setEnabled(true);
+                        progressBar.setVisibility(View.INVISIBLE);
                         addressView.setText(addresses.get(0).getAddressLine(0));
                     }
                     //addressView.setText(addresses.get(0).getAddressLine(0));
@@ -167,7 +172,7 @@ public class PingBackForm extends AppCompatActivity {
                                 String visible="true";
                                 if(visibile.isChecked())
                                 {
-                                    Toast.makeText(PingBackForm.this, "Activated", Toast.LENGTH_SHORT).show();
+
                                     visible="false";
                                 }
                                 final String finalVisible=visible;

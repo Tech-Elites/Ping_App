@@ -52,6 +52,7 @@ public class ViewPing extends AppCompatActivity {
         }
         if(i.hasExtra("fromAccount"))
         {
+
             desc.setText(EachPersonAccount.arrayList.get(index).getDesc());
             address.setText(EachPersonAccount.arrayList.get(index).getAddress());
         }
@@ -228,6 +229,24 @@ public class ViewPing extends AppCompatActivity {
 
 
     }
+    public void OpenMap(View view)
+    {
+
+        Intent intent=new Intent(this,SeeOnMap.class);
+        if(i.hasExtra("fromAccount"))
+        {
+            intent.putExtra("lat",Double.parseDouble(EachPersonAccount.arrayList.get(index).getLat()));
+            intent.putExtra("lng",Double.parseDouble(EachPersonAccount.arrayList.get(index).getLng()));
+        }
+        else
+        {
+            intent.putExtra("lat",Double.parseDouble(pingspage.arrayList.get(index).getLat()));
+            intent.putExtra("lng",Double.parseDouble(pingspage.arrayList.get(index).getLng()));
+
+        }
+        startActivity(intent);
+    }
+
 
 
 }

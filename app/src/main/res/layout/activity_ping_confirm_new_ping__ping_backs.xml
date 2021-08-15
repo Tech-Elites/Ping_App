@@ -7,25 +7,28 @@
     tools:context=".PingConfirmNewPing_PingBacks">
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="20dp"
-            android:paddingVertical="20dp"
             android:layout_height="wrap_content"
-            android:text="Select Users from this area to ping back:" />
+            android:fontFamily="sans-serif-medium"
+            android:paddingVertical="20dp"
+            android:text="Select Users from this area to ping back:"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
         <ListView
             android:id="@+id/newPingPingbackListView"
             android:layout_width="match_parent"
-            android:layout_height="450dp" />
+            android:layout_height="450dp">
+
+        </ListView>
 
         <Button
             android:id="@+id/button7"
@@ -40,5 +43,45 @@
             android:layout_height="wrap_content"
             android:onClick="newPingPingbackProceed"
             android:text="Proceed" />
+
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarConfirmPingBacks"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewPingBacks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="230dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBarConfirmPingBacks"
+        app:srcCompat="@drawable/catafk" />
+
+    <TextView
+        android:id="@+id/textViewPingsBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="230dp"
+        android:visibility="invisible"
+        android:text="No nearby pings!!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="20dp"
+        android:fontFamily="@font/nexabold"
+        android:textColor="@color/black"
+
+        app:layout_constraintTop_toBottomOf="@id/imageViewPingBacks" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

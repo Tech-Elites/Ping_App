@@ -2,7 +2,9 @@ package com.example.ping;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,7 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class SeeOnMap extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
+    LatLng myLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,13 @@ public class SeeOnMap extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Intent i=getIntent();
+        double lat,lng;
+        lat=i.getDoubleExtra("lat",0);
+        lng=i.getDoubleExtra("lng",0);
+
+        myLocation=new LatLng(lat,lng);
+
     }
 
     /**
@@ -39,8 +48,18 @@ public class SeeOnMap extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        mMap.addMarker(new MarkerOptions().position(myLocation));
+        moveToCurrentLocation(myLocation);
+    }
+    private void moveToCurrentLocation(LatLng currentLocation)
+    {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
+
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
+
     }
 }

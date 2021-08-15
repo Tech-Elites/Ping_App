@@ -34,7 +34,7 @@ public class NotificationPage extends AppCompatActivity {
 
     void deleteNotification(int pos){
         String uidToDelete=arrayList.get(pos).getUserid();
-        Toast.makeText(this, uidToDelete, Toast.LENGTH_SHORT).show();
+
         arrayList.remove(pos);
         customAdaptor=new NotifcationCustomAdaptor(this,arrayList);
         listView.setAdapter(customAdaptor);
