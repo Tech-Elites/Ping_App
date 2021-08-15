@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button15"
+                android:id="@+id/logoutIconButton"
                 android:onClick="LogOut"
                 android:layout_width="72dp"
                 android:layout_height="60dp"
@@ -43,14 +43,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button16"
+                android:id="@+id/notificationIconButton"
                 android:onClick="GoToNotifications"
                 android:backgroundTint="@color/myblue"
                 android:layout_width="72dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/notification"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

@@ -3,6 +3,7 @@ package com.example.ping;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -21,11 +22,29 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LandingPage extends AppCompatActivity {
 
     Toolbar tb;
+    Button notBut;
+    int count=0;
+    String username;
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        if(count>0){
+            notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+            notBut.setText(count);
+        }
+        //Refresh your stuff here
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +57,33 @@ public class LandingPage extends AppCompatActivity {
 
         tb=findViewById(R.id.myToolbar);
         setSupportActionBar(tb);
+
+        notBut=findViewById(R.id.notificationIconButton);
+//        notBut.setBackground(ContextCompat.getDrawable(this, R.drawable.notification));
+        notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
+        username=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        boolean newNot=false;
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(username).child("notifications");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    count++;
+                }
+                if(count>0){
+                    notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+//                    notBut.setText(count);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 

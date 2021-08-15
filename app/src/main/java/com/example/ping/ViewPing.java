@@ -91,7 +91,6 @@ public class ViewPing extends AppCompatActivity {
         PingRequest otherUser=pingspage.arrayList.get(index);
         String otherPersonsUid=otherUser.getUserid();
         FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("notifications").push().setValue(toBeAddedPingRequest.returnPingRequest());
-//        Toast.makeText(this, pingspage.pingIDForDelete.get(index), Toast.LENGTH_SHORT).show();
         FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("ping_back_from_").child(pingspage.pingIDForDelete.get(index)).getRef().removeValue();
         finish();
     }
