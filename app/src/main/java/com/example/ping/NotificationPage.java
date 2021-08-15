@@ -48,7 +48,9 @@ public class NotificationPage extends AppCompatActivity {
                     PingRequest temp=snapshot1.getValue(PingRequest.class);
                     if(temp.getUserid().compareTo(uidToDelete)==0){
                        snapshot1.getRef().removeValue();
+                       count--;
                    }
+                    checker();
                 }
             }
 

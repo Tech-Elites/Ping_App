@@ -12,7 +12,20 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
         tools:layout_editor_absoluteX="323dp">
+
+
+        <TextView
+            android:id="@+id/viewPingDesc123"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nexabold"
+            android:paddingVertical="10dp"
+            android:text="Ping-Back" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -23,13 +36,29 @@
         <TextView
             android:id="@+id/viewPingDesc"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="150dp"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nexalight"
+            android:paddingVertical="10dp"
             android:text="Description" />
+        <TextView
+            android:id="@+id/viewPingAddress123"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nexabold"
+            android:text="Address:" />
         <TextView
             android:id="@+id/viewPingAddress"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="Description" />
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nexalight"
+            android:paddingVertical="10dp"
+            android:text="Address" />
 
         <LinearLayout
             android:layout_width="match_parent"

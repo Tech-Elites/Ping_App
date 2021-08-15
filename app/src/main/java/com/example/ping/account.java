@@ -117,8 +117,8 @@ public class account extends Fragment {
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                 {
                     connections+=1;
-                    searchPings();
                 }
+                searchPings();
 
             }
 

@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,8 @@ public class ViewPing extends AppCompatActivity {
     TextView desc,address;
     boolean inCompanion;
     int index;
+
+    String currentUserName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +62,40 @@ public class ViewPing extends AppCompatActivity {
         }
         else
         {
+            PingRequest otherUser=pingspage.arrayList.get(index);
+            String currentAcceptingUID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("name");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    currentUserName=snapshot.getValue().toString();
+                    PingRequest toBeAddedPingRequest = new PingRequest(otherUser.getDesc(), otherUser.getAddress(), otherUser.getLat(), otherUser.getLng(),currentUserName,currentAcceptingUID);
+                    addNotificationToOther(toBeAddedPingRequest,currentAcceptingUID);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+//            Toast.makeText(this, , Toast.LENGTH_SHORT).show();
             //pingspage.arrayList.get(index).getUserid();
-            //pingspage.pingIDForDelete.get(index);
+
         }
     }
+
+    void addNotificationToOther(PingRequest toBeAddedPingRequest,String currentAcceptingUID){
+        PingRequest otherUser=pingspage.arrayList.get(index);
+        String otherPersonsUid=otherUser.getUserid();
+        FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("notifications").push().setValue(toBeAddedPingRequest.returnPingRequest());
+//        Toast.makeText(this, pingspage.pingIDForDelete.get(index), Toast.LENGTH_SHORT).show();
+        FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("ping_back_from_").child(pingspage.pingIDForDelete.get(index)).getRef().removeValue();
+        finish();
+    }
+
     void PingBackFunc()
     {
         Intent i=new Intent(this,PingBackForm.class);
