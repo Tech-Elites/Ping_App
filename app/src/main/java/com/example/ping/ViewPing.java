@@ -1,16 +1,33 @@
 package com.example.ping;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ViewPing extends AppCompatActivity {
 
     Button Ping_back_Accept;
     TextView desc,address;
+    boolean inCompanion;
+    int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +36,8 @@ public class ViewPing extends AppCompatActivity {
         desc=findViewById(R.id.viewPingDesc);
         address=findViewById(R.id.viewPingAddress);
         Intent i=getIntent();
-        boolean inCompanion=i.getBooleanExtra("inCompanion",false);
-        int index=i.getIntExtra("index",0);
+        inCompanion=i.getBooleanExtra("inCompanion",false);
+        index=i.getIntExtra("index",0);
         if(inCompanion)
         {
             Ping_back_Accept.setText("Ping Back");
@@ -33,4 +50,104 @@ public class ViewPing extends AppCompatActivity {
         address.setText(pingspage.arrayList.get(index).getAddress());
 
     }
+    public void OnClickPingBackAccept(View view)
+    {
+        if(inCompanion)
+        {
+            PingBackFunc();
+        }
+        else
+        {
+            //pingspage.arrayList.get(index).getUserid();
+            //pingspage.pingIDForDelete.get(index);
+        }
+    }
+    void PingBackFunc()
+    {
+        Intent i=new Intent(this,PingBackForm.class);
+        i.putExtra("lat",pingspage.arrayList.get(index).getLat());
+        i.putExtra("lng",pingspage.arrayList.get(index).getLng());
+        i.putExtra("index",index);
+        finish();
+        startActivity(i);
+
+        /*FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int count=0;
+                for(DataSnapshot dataSnapshot:snapshot.getChildren())
+                {
+                    double lat=0,lng=0;
+                    String finalVisible="",desc="",address="";
+                    for(DataSnapshot snapshot1:dataSnapshot.getChildren())
+                    {
+                        if(snapshot1.getKey().toString().compareTo("lat")==0)
+                        {
+                            lat=Double.parseDouble(snapshot1.getValue().toString());
+                        }
+                        if(snapshot1.getKey().toString().compareTo("lng")==0)
+                        {
+                            lng=Double.parseDouble(snapshot1.getValue().toString());
+                        }
+                        if(snapshot1.getKey().toString().compareTo("visible")==0)
+                        {
+                            finalVisible=(snapshot1.getValue().toString());
+                        }
+                        if(snapshot1.getKey().toString().compareTo("desc")==0)
+                        {
+                            desc=(snapshot1.getValue().toString());
+                        }
+                        if(snapshot1.getKey().toString().compareTo("address")==0)
+                        {
+                            address=(snapshot1.getValue().toString());
+                        }
+
+                    }
+                    float result[]=new float[1];
+                    Location.distanceBetween(lat,lng,Double.parseDouble(pingspage.arrayList.get(index).getLat()),Double.parseDouble(pingspage.arrayList.get(index).getLng()),result);
+
+                    if(result[0]<150)
+                    {
+                        final String finalVisible_=finalVisible,address_=address,desc_=desc;
+                        final  double lat_=lat,lng_=lng;
+                        new AlertDialog.Builder(ViewPing.this)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setTitle("Alert!")
+                                .setMessage("You already have a ping in this location proceed to ping back that ping??")
+                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent i=new Intent(ViewPing.this,PingConfirmNewPing.class);
+                                        //make sure that one person is not able to make consecutive pings from one location
+                                        i.putExtra("visible",finalVisible_);
+                                        i.putExtra("lat",""+lat_);
+                                        i.putExtra("long",""+lng_);
+                                        i.putExtra("desc",desc_);
+                                        i.putExtra("address",address_);
+                                        i.putExtra("ping_back_id",pingspage.arrayList.get(index).getUserid());
+                                        startActivity(i);
+                                    }
+                                })
+                                .show();
+                        count++;
+                    }
+
+                }
+                if(count==0)
+                {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+    }
+
+
 }

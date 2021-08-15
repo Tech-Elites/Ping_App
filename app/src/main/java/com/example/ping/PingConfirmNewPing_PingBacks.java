@@ -35,7 +35,10 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
     String address,desc,lat,lng,visible,curr_user_name="";
     ArrayList<String> selectedIdsStrangers=new ArrayList<>();
     ArrayList<String> alltheIds=new ArrayList<>();
+    ArrayList<String> allTheProbableIds=new ArrayList<>();
     double lat_d,lng_d;
+    boolean reshuffled=false;
+    String ping_back_id,ping_id_delete="null";
     FirebaseUser u;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,35 +49,97 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
         desc=i.getStringExtra("desc");
         lat=i.getStringExtra("lat");
         lat_d=Double.parseDouble(lat);
+        if(i.hasExtra("ping_back_id"))
+        {
+            ping_back_id=i.getStringExtra("ping_back_id");
+            selectedIdsStrangers.add(ping_back_id);
+        }
+        if(i.hasExtra("ping_id_delete"))
+        {
+            ping_id_delete=i.getStringExtra("ping_id_delete");
+        }
         lng=i.getStringExtra("long");
         lng_d=Double.parseDouble(lng);
         visible=i.getStringExtra("visible");
         listView=findViewById(R.id.newPingPingbackListView);
+        reshuffled=false;
         /*
         /////////////////////////////////
         //////////////////////////////
         //////////////////////////////
         imlment the idea that in case of no near by pings display an image instead of a blank page
          */
-        findThePings();
+        findAllTheProbableIDS();
+
     }
-    void findThePings()
+    //finds all the stranger ids
+    void findAllTheProbableIDS()
+    {
+        FirebaseUser u=FirebaseAuth.getInstance().getCurrentUser();
+        if(u!=null)
+        {
+            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot dataSnapshot:snapshot.getChildren())
+                    {
+                        if(dataSnapshot.getKey().compareTo(u.getUid())!=0)
+                        {
+                            String id=dataSnapshot.getKey();
+                            int flag1=0;
+                            for(DataSnapshot snapshot1:dataSnapshot.getChildren())
+                            {
+                                if(snapshot1.getKey().compareTo("companions")==0)
+                                {
+                                    flag1=1;
+                                    int flag=0;
+                                    for(DataSnapshot snapshot2:snapshot1.getChildren())
+                                    {
+                                        if(snapshot2.getValue().toString().compareTo(u.getUid())==0)
+                                        {
+                                            flag=1;
+                                            break;
+                                        }
+                                    }
+                                    if(flag==0)
+                                    {
+                                        allTheProbableIds.add(id);
+
+                                    }
+                                }
+                            }
+                            if(flag1==0)
+                            {
+                                allTheProbableIds.add(id);
+
+                            }
+                        }
+                    }
+                    if(allTheProbableIds.size()>0)
+                        findThePings(allTheProbableIds.get(0),0);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+
+    void findThePings(String id,int n)
     {
         FirebaseUser u= FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(id);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren())
-                {
-                    //all the ids
-                    if(dataSnapshot.getKey().toString().compareTo(u.getUid())!=0)
-                    {
                         //all the id info -name,pings
                         String name="";
                         Ping ping=null;
-                        String id=dataSnapshot.getKey();
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
+
+                        for(DataSnapshot dataSnapshot1:snapshot.getChildren())
                         {
 
                             if(dataSnapshot1.getKey().toString().compareTo("name")==0)
@@ -137,11 +202,14 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                             arrayList.add(new PingBackImageSwitchClass(name,ping.getDesc(),false));
                             //Toast.makeText(PingConfirmNewPing_PingBacks.this, ""+name+" here"+id, Toast.LENGTH_SHORT).show();
                         }
-
-
-                    }
-                }
-                createAdaptor();
+                        if(n<(allTheProbableIds.size()-1))
+                        {
+                            findThePings(allTheProbableIds.get(n+1),n+1);
+                        }
+                        else
+                        {
+                            createAdaptor();
+                        }
             }
 
             @Override
@@ -167,15 +235,88 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     curr_user_name=task.getResult().getValue().toString();
-
+                    if(PingConfirmNewPing.selectedIds.size()>0)
+                        shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(0),0);
+                    else
+                        reshuffled=true;
                 }
             }
         });
     }
+    //ensuring that the selected ids from the comoanion page are pings and not ping backs
+    void shufflingOfPingIDS(String id,int n)
+    {
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(id);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int flag=0;
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+
+                    if(snapshot1.getKey().compareTo("pings")==0)
+                    {
+                        flag=1;
+                        for(DataSnapshot snapshot2:snapshot1.getChildren())
+                        {
+                            double lat_=0,lng_=0;
+                            for(DataSnapshot snapshot3:snapshot2.getChildren())
+                            {
+                                if(snapshot3.getKey().compareTo("lat")==0)
+                                {
+                                    lat_=Double.parseDouble(snapshot3.getValue().toString());
+                                }
+                                if(snapshot3.getKey().compareTo("lng")==0)
+                                {
+                                    lng_=Double.parseDouble(snapshot3.getValue().toString());
+                                }
+
+                            }
+                            float result[]=new float[1];
+                            Location.distanceBetween(lat_,lng_,lat_d,lng_d,result);
+                            if(result[0]<150)
+                            {
+                                PingConfirmNewPing.selectedIds.remove(n);
+                                selectedIdsStrangers.add(id);
+                                //Toast.makeText(PingConfirmNewPing_PingBacks.this, "shuffling- "+id+" size-"+PingConfirmNewPing.selectedIds.size()+" size2-"+selectedIdsStrangers.size(), Toast.LENGTH_SHORT).show();
+
+                            }
+                            if(n<(PingConfirmNewPing.selectedIds.size()-1))
+                            {
+                                shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(n+1),n+1);
+                            }
+                            else
+                            {
+                                reshuffled=true;
+                            }
+                        }
+
+                    }
+                }
+                if(flag==0)
+                {
+                    if(n<(PingConfirmNewPing.selectedIds.size()-1))
+                    {
+                        shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(n+1),n+1);
+                    }
+                    else
+                    {
+                        reshuffled=true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     //ensure that only one button is pressed
     public void newPingPingbackSkip(View view) {
-        if(curr_user_name!="")
+        if(curr_user_name!=""&&reshuffled)
         {
             if(PingConfirmNewPing.selectedIds.size()>0)
             {
@@ -188,7 +329,7 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
     }
     public void addToPing_c(String userId,int n,HashMap p)
     {
-        FirebaseDatabase.getInstance().getReference().child(userId).child("ping_from_c").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child(userId).child("ping_from_").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful())
@@ -203,14 +344,14 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
     }
     public void addPingBack_s(String userId, int n, HashMap p)
     {
-        FirebaseDatabase.getInstance().getReference().child(userId).child("ping_back_from_s").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child(userId).child("ping_back_from_").push().setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful())
                 {
                     if(n<(selectedIdsStrangers.size()-1))
                     {
-                        addToPing_c(selectedIdsStrangers.get(n+1),n+1,p);
+                        addPingBack_s(selectedIdsStrangers.get(n+1),n+1,p);
                     }
                 }
             }
@@ -219,8 +360,11 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
 
 
     public void newPingPingbackProceed(View view) {
-        if(curr_user_name!="")
+        Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
+        if(curr_user_name!=""&&reshuffled)
         {
+            Toast.makeText(this, "here1", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "size ping confirm - "+PingConfirmNewPing.selectedIds.size(), Toast.LENGTH_SHORT).show();
             View v;
             SwitchCompat sw;
             for(int i=0;i<listView.getCount();i++)
@@ -232,6 +376,8 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                     selectedIdsStrangers.add(alltheIds.get(i));
                 }
             }
+            //Toast.makeText(this, "size selected ids strangers confirm - "+selectedIdsStrangers.size(), Toast.LENGTH_SHORT).show();
+
             if(selectedIdsStrangers.size()>0)
             {
                 PingRequest p=new PingRequest(desc,address,lat,lng,curr_user_name,u.getUid());
@@ -244,11 +390,36 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 HashMap<String,String> h=p.returnPingRequest();
                 addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
             }
-
-            AddPing();
+            if(ping_id_delete.compareTo("null")==0)
+            {
+                AddPing();
+            }
+            else
+            {
+                Toast.makeText(this, ""+ping_id_delete, Toast.LENGTH_SHORT).show();
+                deletePing();
+            }
 
         }
     }
+    //delete the ping_from
+    void deletePing()
+    {
+        FirebaseUser u=FirebaseAuth.getInstance().getCurrentUser();
+        if(u!=null)
+        {
+            FirebaseDatabase.getInstance().getReference().child(u.getUid()).child("ping_from_").child(ping_id_delete).getRef().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful())
+                    {
+                        AddPing();
+                    }
+                }
+            });
+        }
+    }
+
     public void AddPing()
     {
         Ping p=new Ping(visible,desc,address,lat,lng);
