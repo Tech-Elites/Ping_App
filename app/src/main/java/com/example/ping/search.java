@@ -1,5 +1,7 @@
 package com.example.ping;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,14 +77,42 @@ public class search extends Fragment {
     Button searchButton;
     EditText searchText;
     String searchVal;
+    TextView searchPageCountText;
     ArrayList<UserNameIDClass> arrayList;
     CustomAdaptorSearchPage customAdaptor;
     ListView listView;
+    int count=0;
+
+    void updateCountText(){
+        if(count==0){
+            searchPageCountText.setText("No results found!");
+        }
+        else{
+            searchPageCountText.setText(count+" results found!");
+        }
+    }
 
     public void SearchUserName(){
+        count=0;
         listView=getView().findViewById(R.id.searchPageListView);
         searchVal=searchText.getText().toString();
+        if(searchVal.length()==0){
+            new AlertDialog.Builder(getContext())
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("No results!")
+                    .setMessage("Please enter a valid query.")
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    })
+                    .show();
+            return;
+        }
         arrayList=new ArrayList<>();
+        searchPageCountText=getActivity().findViewById(R.id.searchPageCountText);
+        String currentUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,12 +126,15 @@ public class search extends Fragment {
                     if(searchVal.toLowerCase().compareTo(temp.substring(0,searchVal.length()).toLowerCase())==0){
 //                        Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
                         UserNameIDClass tempClass=new UserNameIDClass(temp,snapshot1.getKey());
+                        if(tempClass.getUid().compareTo(currentUid)==0)
+                            continue;
                         arrayList.add(tempClass);
+                        count++;
                     }
                 }
                 customAdaptor=new CustomAdaptorSearchPage(getContext(),arrayList);
                 listView.setAdapter(customAdaptor);
-
+                updateCountText();
             }
 
             @Override

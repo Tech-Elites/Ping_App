@@ -74,6 +74,18 @@ public class pingspage extends Fragment {
         }
     }
 
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        if(inCompanion){
+            onCompanionClick();
+        }
+        else
+            onPingbacksClick();
+        //Refresh your stuff here
+    }
+
     Button companions, pingbacks;
     CustomAdaptorHomeList customAdaptor;
     static ArrayList<PingRequest> arrayList;

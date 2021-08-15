@@ -37,6 +37,7 @@
                 android:layout_width="72dp"
                 android:layout_height="60dp"
                 android:drawableLeft="@drawable/logout"
+                android:backgroundTint="@color/myblue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +45,7 @@
             <Button
                 android:id="@+id/button16"
                 android:onClick="GoToNotifications"
+                android:backgroundTint="@color/myblue"
                 android:layout_width="72dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="4dp"

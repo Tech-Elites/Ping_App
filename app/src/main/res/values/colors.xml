@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="myblue">#3C7BFB</color>
+
+    <color name="theme_blue3">#5680E9</color>
+    <color name="theme_blue2">#84CEEB</color>
+    <color name="theme_blue1">#5AB9EA</color>
+    <color name="theme_grey">#C1C8E4</color>
+    <color name="theme_purple">#8860D0</color>
 </resources>
