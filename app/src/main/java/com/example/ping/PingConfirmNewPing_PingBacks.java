@@ -131,6 +131,11 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                     }
                     if(allTheProbableIds.size()>0)
                         findThePings(allTheProbableIds.get(0),0);
+                    else
+                    {
+                        Toast.makeText(PingConfirmNewPing_PingBacks.this, "here", Toast.LENGTH_SHORT).show();
+                        createAdaptor();
+                    }
                 }
 
                 @Override
@@ -395,9 +400,29 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                     }
                     else
                     {
-                        if(PingConfirmNewPing.selectedIds.size()==0)
+                        if(PingConfirmNewPing.selectedIds.size()>0)
                         {
-                            AddPing();
+                            PingRequest p=new PingRequest(desc,address,lat,lng,curr_user_name,u.getUid());
+                            HashMap<String,String> h=p.returnPingRequest();
+                            addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
+                        }
+                        else
+                        {
+                            if(ping_id_delete.compareTo("null")==0)
+                            {
+                                if(addPing)
+                                    AddPing();
+                                else
+                                {
+                                    finishAffinity();
+                                    startActivity(new Intent(PingConfirmNewPing_PingBacks.this,LandingPage.class));
+                                }
+                            }
+                            else
+                            {
+
+                                deletePing();
+                            }
                         }
                     }
                 }
@@ -431,13 +456,13 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                 HashMap<String,String> h=p.returnPingRequest();
                 addPingBack_s(selectedIdsStrangers.get(0),0,h);
             }
-            if(PingConfirmNewPing.selectedIds.size()>0)
+            else if(PingConfirmNewPing.selectedIds.size()>0)
             {
                 PingRequest p=new PingRequest(desc,address,lat,lng,curr_user_name,u.getUid());
                 HashMap<String,String> h=p.returnPingRequest();
                 addToPing_c(PingConfirmNewPing.selectedIds.get(0),0,h);
             }
-            if(PingConfirmNewPing.selectedIds.size()==0&&selectedIdsStrangers.size()==0)
+            else
             {
                 AddPing();
             }

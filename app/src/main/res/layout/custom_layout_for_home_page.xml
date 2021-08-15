@@ -9,13 +9,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="10dp"
-        android:orientation="horizontal">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -23,33 +26,33 @@
                 android:id="@+id/HomeViewName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
-
                 android:fontFamily="@font/nexabold"
-                android:text="TextView" />
+                android:padding="5dp"
+                android:text="TextView"
+
+                android:textColor="@color/black"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/HomeViewDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
                 android:fontFamily="@font/nexabold"
-                android:text="TextView" />
+                android:padding="5dp"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/HomeViewAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:textSize="13dp"
-                android:paddingHorizontal="5dp"
-                android:textColor="@color/black"
                 android:fontFamily="@font/nexabold"
-                android:text="TextView" />
+                android:paddingHorizontal="5dp"
+                android:paddingTop="10dp"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
         </LinearLayout>
 
         <ImageView

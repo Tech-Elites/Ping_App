@@ -33,18 +33,36 @@ public class LandingPage extends AppCompatActivity {
     Toolbar tb;
     Button notBut;
     int count=0;
+
     String username;
 
     @Override
     public void onResume()
     {
         super.onResume();
-        if(count>0){
-            notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
-        }
-        else{
-            notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
-        }
+        count=0;
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(username).child("notifications");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    count++;
+                }
+                if(count>0){
+                    notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+                }
+                else{
+                    notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

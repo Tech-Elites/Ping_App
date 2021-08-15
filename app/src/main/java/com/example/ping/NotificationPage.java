@@ -124,10 +124,10 @@ public class NotificationPage extends AppCompatActivity {
 
     void checker(){
         if(count==0){
-            checkerTV.setText("No new notifications!");
+            checkerTV.setText("No new prompts!");
         }
         else{
-            checkerTV.setText(count+" new notifications!");
+            checkerTV.setText(count+" new prompts!");
         }
     }
 }
