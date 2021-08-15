@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/lay1"
     tools:context=".home">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         tools:layout_editor_absoluteX="16dp"
@@ -18,7 +20,7 @@
             android:id="@+id/textView223"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
             android:text="Ping"
             android:textColor="@color/black"
@@ -27,7 +29,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingTop="15dp"
             android:paddingBottom="5dp"
             android:text="Select Visibility"
@@ -36,6 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -43,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/nexabold"
                 android:textColor="@color/black"
                 android:layout_marginRight="20dp"
                 android:text="Private" />
@@ -63,7 +66,7 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:paddingVertical="10dp"
             android:text="Upload Media"
             android:textColor="@color/black" />
@@ -72,14 +75,22 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/button_shadow"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/nexabold"
             android:text="Upload Image" />
 
         <TextView
             android:id="@+id/textView44"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingTop="40dp"
+            android:fontFamily="@font/nexabold"
+            android:paddingTop="20dp"
             android:text="Description:"
             android:textColor="@color/black" />
 
@@ -89,7 +100,7 @@
             android:layout_height="150dp"
             android:ems="10"
 
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:inputType="textMultiLine"
 
             android:paddingTop="20dp"
@@ -100,8 +111,8 @@
             android:id="@+id/addressHomePage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingTop="40dp"
+            android:fontFamily="@font/nexabold"
+            android:paddingVertical="20dp"
             android:text="Select your address-"
             android:textColor="@color/black" />
 
@@ -109,12 +120,25 @@
             android:id="@+id/buttonsetLocationHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shadow"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/nexabold"
+            android:layout_marginVertical="10dp"
             android:text="Set location" />
 
         <Button
             android:id="@+id/createPingHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shadow"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/nexabold"
             android:text="Send" />
 
     </LinearLayout>

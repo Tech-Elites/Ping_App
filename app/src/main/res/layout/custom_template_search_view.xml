@@ -17,13 +17,13 @@
             android:id="@+id/imageView5"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:background="@drawable/profilephoto" />
 
         <TextView
             android:padding="20dp"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:id="@+id/searchCustomListName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

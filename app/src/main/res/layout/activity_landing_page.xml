@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lay1"
     tools:context=".LandingPage">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,7 +38,7 @@
                 android:layout_width="72dp"
                 android:layout_height="60dp"
                 android:drawableLeft="@drawable/logout"
-                android:backgroundTint="@color/myblue"
+                android:backgroundTint="@color/theme_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +46,7 @@
             <Button
                 android:id="@+id/notificationIconButton"
                 android:onClick="GoToNotifications"
-                android:backgroundTint="@color/myblue"
+                android:backgroundTint="@color/theme_grey"
                 android:layout_width="72dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="4dp"
@@ -62,7 +63,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:letterSpacing="0.1"
                 android:text="Ping"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/myToolbar"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -4,37 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="30dp"
+    android:background="@drawable/lay1"
     tools:context=".PingConfirmNewPing_PingBacks">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingVertical="20dp"
-            android:text="Select Users from this area to ping back:"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20dp"
+            android:paddingVertical="20dp"
+            android:layout_height="wrap_content"
+            android:text="Select Users from this area to ping back:" />
 
         <ListView
             android:id="@+id/newPingPingbackListView"
             android:layout_width="match_parent"
-            android:layout_height="450dp">
-
-        </ListView>
+            android:layout_height="400dp" />
 
         <Button
             android:id="@+id/button7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="newPingPingbackSkip"
+            android:background="@drawable/button_shadow"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
+            android:layout_marginVertical="20dp"
+            android:fontFamily="@font/nexabold"
             android:text="Skip" />
 
         <Button
@@ -42,8 +49,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="newPingPingbackProceed"
+            android:background="@drawable/button_shadow"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/nexabold"
             android:text="Proceed" />
-
     </LinearLayout>
 
     <ProgressBar

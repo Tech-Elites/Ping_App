@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lay5"
     tools:context=".search">
 
     <LinearLayout
@@ -19,7 +20,7 @@
             android:textColor="@color/black"
             android:padding="13dp"
             android:textSize="25dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/nexabold"
             android:text="Search:" />
 
         <LinearLayout
@@ -33,20 +34,22 @@
                 android:id="@+id/searchPagePersonName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/nexabold"
                 android:hint="User Name"
                 android:layout_marginTop="5dp"
                 android:text="" />
 
             <Button
                 android:id="@+id/searchPageIdButton"
-                android:layout_width="10dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:background="@drawable/button_shadow"
+                android:text="Search"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:drawableLeft="@drawable/search_icon" />
         </LinearLayout>
 
