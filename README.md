@@ -9,8 +9,6 @@ Users can also search for other users to view their previous public pings, and c
 
 ## Demonstration:
 
-To test out the app on your android device, <a href="https://drive.google.com/file/d/1qEGqBvuY-LNc3vVXUWmKBZBFs8wKITv3/view?usp=sharing" target="_blank">click here</a> to download apk.
-
 ### Authentication:
 
 <image src="https://user-images.githubusercontent.com/63179137/129543319-f7f7b8a6-00db-422a-8492-92b3903929dd.jpeg" width=250>
