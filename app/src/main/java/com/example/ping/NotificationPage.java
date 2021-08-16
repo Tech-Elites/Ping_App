@@ -42,16 +42,21 @@ public class NotificationPage extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    PingRequest temp=snapshot1.getValue(PingRequest.class);
-                    if(temp.getUserid().compareTo(uidToDelete)==0){
-                       snapshot1.getRef().removeValue();
-                       count--;
-                   }
-                    checker();
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        PingRequest temp=snapshot1.getValue(PingRequest.class);
+                        if(temp.getUserid().compareTo(uidToDelete)==0){
+                            snapshot1.getRef().removeValue();
+                            count--;
+                        }
+                        checker();
+                    }
                 }
+                catch(Exception e){
+
+                }
+
             }
 
             @Override
@@ -73,44 +78,49 @@ public class NotificationPage extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    PingRequest temp;
-                    temp=snapshot1.getValue(PingRequest.class);
-                    arrayList.add(temp);
-                    count++;
-                }
-                checker();
-                customAdaptor=new NotifcationCustomAdaptor(NotificationPage.this,arrayList);
-                listView.setAdapter(customAdaptor);
-                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which){
-                                    case DialogInterface.BUTTON_POSITIVE:
-                                        deleteNotification(pos);
-                                        break;
-
-                                    case DialogInterface.BUTTON_NEGATIVE:
-                                        //No button clicked
-                                        break;
-                                }
-                            }
-                        };
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(NotificationPage.this);
-                        builder.setMessage("Are your sure you want to delete this notification?").setPositiveButton("Yes", dialogClickListener)
-                                .setNegativeButton("No", dialogClickListener).show();
-
-
-                        return true;
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        PingRequest temp;
+                        temp=snapshot1.getValue(PingRequest.class);
+                        arrayList.add(temp);
+                        count++;
                     }
-                });
+                    checker();
+                    customAdaptor=new NotifcationCustomAdaptor(NotificationPage.this,arrayList);
+                    listView.setAdapter(customAdaptor);
+                    listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            deleteNotification(pos);
+                                            break;
+
+                                        case DialogInterface.BUTTON_NEGATIVE:
+                                            //No button clicked
+                                            break;
+                                    }
+                                }
+                            };
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(NotificationPage.this);
+                            builder.setMessage("Are your sure you want to delete this notification?").setPositiveButton("Yes", dialogClickListener)
+                                    .setNegativeButton("No", dialogClickListener).show();
+
+
+                            return true;
+                        }
+                    });
+                }
+                catch(Exception e){
+
+                }
+
+
             }
 
             @Override

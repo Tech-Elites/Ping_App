@@ -40,22 +40,28 @@ public class EachPersonAccount extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                arrayList.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    Ping temp=new Ping();
-                    temp=snapshot1.getValue(Ping.class);
-                    if(temp.getVisible().compareTo("true")==0)
-                        arrayList.add(temp);
+                try{
+                    arrayList.clear();
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        Ping temp=new Ping();
+                        temp=snapshot1.getValue(Ping.class);
+                        if(temp.getVisible().compareTo("true")==0)
+                            arrayList.add(temp);
+                    }
+
+                    if(arrayList.isEmpty()){
+                        imageNoResult.setVisibility(View.VISIBLE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
+                    customAdaptor=new CustomAdaptorAccountPagePings(EachPersonAccount.this,arrayList);
+                    listView.setAdapter(customAdaptor);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                catch (Exception e){
+
                 }
 
-                if(arrayList.isEmpty()){
-                    imageNoResult.setVisibility(View.VISIBLE);
-                    textNoResult.setVisibility(View.VISIBLE);
-                }
-                customAdaptor=new CustomAdaptorAccountPagePings(EachPersonAccount.this,arrayList);
-                listView.setAdapter(customAdaptor);
-                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override

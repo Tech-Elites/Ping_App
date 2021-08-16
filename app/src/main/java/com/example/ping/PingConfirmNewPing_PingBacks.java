@@ -95,47 +95,53 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot dataSnapshot:snapshot.getChildren())
-                    {
-                        if(dataSnapshot.getKey().compareTo(u.getUid())!=0&&dataSnapshot.getKey().compareTo(ping_back_id)!=0)
+                    try{
+                        for(DataSnapshot dataSnapshot:snapshot.getChildren())
                         {
-                            String id=dataSnapshot.getKey();
-                            int flag1=0;
-                            for(DataSnapshot snapshot1:dataSnapshot.getChildren())
+                            if(dataSnapshot.getKey().compareTo(u.getUid())!=0&&dataSnapshot.getKey().compareTo(ping_back_id)!=0)
                             {
-                                if(snapshot1.getKey().compareTo("companions")==0)
+                                String id=dataSnapshot.getKey();
+                                int flag1=0;
+                                for(DataSnapshot snapshot1:dataSnapshot.getChildren())
                                 {
-                                    flag1=1;
-                                    int flag=0;
-                                    for(DataSnapshot snapshot2:snapshot1.getChildren())
+                                    if(snapshot1.getKey().compareTo("companions")==0)
                                     {
-                                        if(snapshot2.getValue().toString().compareTo(u.getUid())==0)
+                                        flag1=1;
+                                        int flag=0;
+                                        for(DataSnapshot snapshot2:snapshot1.getChildren())
                                         {
-                                            flag=1;
-                                            break;
+                                            if(snapshot2.getValue().toString().compareTo(u.getUid())==0)
+                                            {
+                                                flag=1;
+                                                break;
+                                            }
+                                        }
+                                        if(flag==0)
+                                        {
+                                            allTheProbableIds.add(id);
+
                                         }
                                     }
-                                    if(flag==0)
-                                    {
-                                        allTheProbableIds.add(id);
+                                }
+                                if(flag1==0)
+                                {
+                                    allTheProbableIds.add(id);
 
-                                    }
                                 }
                             }
-                            if(flag1==0)
-                            {
-                                allTheProbableIds.add(id);
-
-                            }
+                        }
+                        if(allTheProbableIds.size()>0)
+                            findThePings(allTheProbableIds.get(0),0);
+                        else
+                        {
+                            Toast.makeText(PingConfirmNewPing_PingBacks.this, "here", Toast.LENGTH_SHORT).show();
+                            createAdaptor();
                         }
                     }
-                    if(allTheProbableIds.size()>0)
-                        findThePings(allTheProbableIds.get(0),0);
-                    else
-                    {
-                        Toast.makeText(PingConfirmNewPing_PingBacks.this, "here", Toast.LENGTH_SHORT).show();
-                        createAdaptor();
+                    catch (Exception e){
+
                     }
+
                 }
 
                 @Override
@@ -157,77 +163,84 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
                         String name="";
                         Ping ping=null;
 
-                        for(DataSnapshot dataSnapshot1:snapshot.getChildren())
+                try{
+                    for(DataSnapshot dataSnapshot1:snapshot.getChildren())
+                    {
+
+                        if(dataSnapshot1.getKey().toString().compareTo("name")==0)
+                        {
+                            name=dataSnapshot1.getValue().toString();
+                        }
+                        if(dataSnapshot1.getKey().toString().compareTo("pings")==0)
                         {
 
-                            if(dataSnapshot1.getKey().toString().compareTo("name")==0)
-                            {
-                                name=dataSnapshot1.getValue().toString();
-                            }
-                            if(dataSnapshot1.getKey().toString().compareTo("pings")==0)
+                            //all the pings random key children
+                            for(DataSnapshot dataSnapshot2:dataSnapshot1.getChildren())
                             {
 
-                                //all the pings random key children
-                                for(DataSnapshot dataSnapshot2:dataSnapshot1.getChildren())
+                                double lat=0,lng=0;
+                                String address="",desc="",visible="";
+                                for(DataSnapshot dataSnapshot3:dataSnapshot2.getChildren())
                                 {
-
-                                    double lat=0,lng=0;
-                                    String address="",desc="",visible="";
-                                    for(DataSnapshot dataSnapshot3:dataSnapshot2.getChildren())
+                                    //all the info about each ping
+                                    if(dataSnapshot3.getKey().toString().compareTo("lat")==0)
                                     {
-                                        //all the info about each ping
-                                        if(dataSnapshot3.getKey().toString().compareTo("lat")==0)
-                                        {
-                                            lat=Double.parseDouble(dataSnapshot3.getValue().toString());
-                                        }
-                                        if(dataSnapshot3.getKey().toString().compareTo("lng")==0)
-                                        {
-                                            lng=Double.parseDouble(dataSnapshot3.getValue().toString());
-                                        }
-                                        if(dataSnapshot3.getKey().toString().compareTo("desc")==0)
-                                        {
-                                            desc=dataSnapshot3.getValue().toString();
-                                        }
-                                        if(dataSnapshot3.getKey().toString().compareTo("address")==0)
-                                        {
-                                            address=dataSnapshot3.getValue().toString();
-                                        }
-                                        if(dataSnapshot3.getKey().toString().compareTo("visible")==0)
-                                        {
-                                            visible=dataSnapshot3.getValue().toString();
-                                        }
-
+                                        lat=Double.parseDouble(dataSnapshot3.getValue().toString());
                                     }
-                                    if(visible.compareTo("true")==0)
+                                    if(dataSnapshot3.getKey().toString().compareTo("lng")==0)
                                     {
-                                        float distance[]=new float[1];
-                                        Location.distanceBetween(lng,lat,lng_d,lat_d,distance);
-                                        //check condition here
-                                        if(distance[0]<150)
-                                        {
-                                            ping=new Ping(visible,desc,address,lat+"",lng+"");
-                                            break;
+                                        lng=Double.parseDouble(dataSnapshot3.getValue().toString());
+                                    }
+                                    if(dataSnapshot3.getKey().toString().compareTo("desc")==0)
+                                    {
+                                        desc=dataSnapshot3.getValue().toString();
+                                    }
+                                    if(dataSnapshot3.getKey().toString().compareTo("address")==0)
+                                    {
+                                        address=dataSnapshot3.getValue().toString();
+                                    }
+                                    if(dataSnapshot3.getKey().toString().compareTo("visible")==0)
+                                    {
+                                        visible=dataSnapshot3.getValue().toString();
+                                    }
 
-                                        }
+                                }
+                                if(visible.compareTo("true")==0)
+                                {
+                                    float distance[]=new float[1];
+                                    Location.distanceBetween(lng,lat,lng_d,lat_d,distance);
+                                    //check condition here
+                                    if(distance[0]<150)
+                                    {
+                                        ping=new Ping(visible,desc,address,lat+"",lng+"");
+                                        break;
+
                                     }
                                 }
                             }
+                        }
 
-                        }
-                        if(ping!=null)
-                        {
-                            alltheIds.add(id);
-                            arrayList.add(new PingBackImageSwitchClass(name,ping.getDesc(),false));
-                            //Toast.makeText(PingConfirmNewPing_PingBacks.this, ""+name+" here"+id, Toast.LENGTH_SHORT).show();
-                        }
-                        if(n<(allTheProbableIds.size()-1))
-                        {
-                            findThePings(allTheProbableIds.get(n+1),n+1);
-                        }
-                        else
-                        {
-                            createAdaptor();
-                        }
+                    }
+                    if(ping!=null)
+                    {
+                        alltheIds.add(id);
+                        arrayList.add(new PingBackImageSwitchClass(name,ping.getDesc(),false));
+                        //Toast.makeText(PingConfirmNewPing_PingBacks.this, ""+name+" here"+id, Toast.LENGTH_SHORT).show();
+                    }
+                    if(n<(allTheProbableIds.size()-1))
+                    {
+                        findThePings(allTheProbableIds.get(n+1),n+1);
+                    }
+                    else
+                    {
+                        createAdaptor();
+                    }
+                }
+                catch (Exception e){
+
+                }
+
+
             }
 
             @Override
@@ -278,59 +291,65 @@ public class PingConfirmNewPing_PingBacks extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int flag=0;
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-
-                    if(snapshot1.getKey().compareTo("pings")==0)
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
                     {
-                        flag=1;
-                        for(DataSnapshot snapshot2:snapshot1.getChildren())
+
+                        if(snapshot1.getKey().compareTo("pings")==0)
                         {
-                            double lat_=0,lng_=0;
-                            for(DataSnapshot snapshot3:snapshot2.getChildren())
+                            flag=1;
+                            for(DataSnapshot snapshot2:snapshot1.getChildren())
                             {
-                                if(snapshot3.getKey().compareTo("lat")==0)
+                                double lat_=0,lng_=0;
+                                for(DataSnapshot snapshot3:snapshot2.getChildren())
                                 {
-                                    lat_=Double.parseDouble(snapshot3.getValue().toString());
+                                    if(snapshot3.getKey().compareTo("lat")==0)
+                                    {
+                                        lat_=Double.parseDouble(snapshot3.getValue().toString());
+                                    }
+                                    if(snapshot3.getKey().compareTo("lng")==0)
+                                    {
+                                        lng_=Double.parseDouble(snapshot3.getValue().toString());
+                                    }
+
                                 }
-                                if(snapshot3.getKey().compareTo("lng")==0)
+                                float result[]=new float[1];
+                                Location.distanceBetween(lat_,lng_,lat_d,lng_d,result);
+                                if(result[0]<150)
                                 {
-                                    lng_=Double.parseDouble(snapshot3.getValue().toString());
+                                    PingConfirmNewPing.selectedIds.remove(n);
+                                    selectedIdsStrangers.add(id);
+                                    //Toast.makeText(PingConfirmNewPing_PingBacks.this, "shuffling- "+id+" size-"+PingConfirmNewPing.selectedIds.size()+" size2-"+selectedIdsStrangers.size(), Toast.LENGTH_SHORT).show();
+
                                 }
+                                if(n<(PingConfirmNewPing.selectedIds.size()-1))
+                                {
+                                    shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(n+1),n+1);
+                                }
+                                else
+                                {
+                                    reshuffled=true;
+                                }
+                            }
 
-                            }
-                            float result[]=new float[1];
-                            Location.distanceBetween(lat_,lng_,lat_d,lng_d,result);
-                            if(result[0]<150)
-                            {
-                                PingConfirmNewPing.selectedIds.remove(n);
-                                selectedIdsStrangers.add(id);
-                                //Toast.makeText(PingConfirmNewPing_PingBacks.this, "shuffling- "+id+" size-"+PingConfirmNewPing.selectedIds.size()+" size2-"+selectedIdsStrangers.size(), Toast.LENGTH_SHORT).show();
-
-                            }
-                            if(n<(PingConfirmNewPing.selectedIds.size()-1))
-                            {
-                                shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(n+1),n+1);
-                            }
-                            else
-                            {
-                                reshuffled=true;
-                            }
                         }
+                    }
+                    if(flag==0)
+                    {
+                        if(n<(PingConfirmNewPing.selectedIds.size()-1))
+                        {
+                            shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(n+1),n+1);
+                        }
+                        else
+                        {
+                            reshuffled=true;
+                        }
+                    }
+                }
+                catch (Exception e){
 
-                    }
                 }
-                if(flag==0)
-                {
-                    if(n<(PingConfirmNewPing.selectedIds.size()-1))
-                    {
-                        shufflingOfPingIDS(PingConfirmNewPing.selectedIds.get(n+1),n+1);
-                    }
-                    else
-                    {
-                        reshuffled=true;
-                    }
-                }
+
             }
 
             @Override

@@ -46,16 +46,23 @@ public class LandingPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    count++;
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        count++;
+                    }
+                    if(count>0){
+                        notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+                    }
+                    else{
+                        notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
+                    }
                 }
-                if(count>0){
-                    notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+                catch(Exception e){
+
                 }
-                else{
-                    notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification, 0, 0, 0);
-                }
+
+
             }
 
             @Override
@@ -85,13 +92,20 @@ public class LandingPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    count++;
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        count++;
+                    }
+                    if(count>0){
+                        notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+                    }
                 }
-                if(count>0){
-                    notBut.setCompoundDrawablesWithIntrinsicBounds(R.drawable.notification_new_icon, 0, 0, 0);
+                catch(Exception e){
+
                 }
+
+
             }
 
             @Override

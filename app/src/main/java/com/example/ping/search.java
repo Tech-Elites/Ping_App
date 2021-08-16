@@ -119,20 +119,27 @@ public class search extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    String temp;
-                    temp=snapshot1.child("name").getValue().toString();
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        String temp;
+                        temp=snapshot1.child("name").getValue().toString();
 
-                    if(searchVal.toLowerCase().compareTo(temp.substring(0,searchVal.length()).toLowerCase())==0){
+                        if(searchVal.toLowerCase().compareTo(temp.substring(0,searchVal.length()).toLowerCase())==0){
 //                        Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
-                        UserNameIDClass tempClass=new UserNameIDClass(temp,snapshot1.getKey());
-                        if(tempClass.getUid().compareTo(currentUid)==0)
-                            continue;
-                        arrayList.add(tempClass);
-                        count++;
+                            UserNameIDClass tempClass=new UserNameIDClass(temp,snapshot1.getKey());
+                            if(tempClass.getUid().compareTo(currentUid)==0)
+                                continue;
+                            arrayList.add(tempClass);
+                            count++;
+                        }
                     }
                 }
+                catch (Exception e){
+
+                }
+
+
                 customAdaptor=new CustomAdaptorSearchPage(getContext(),arrayList);
                 listView.setAdapter(customAdaptor);
                 updateCountText();

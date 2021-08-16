@@ -104,8 +104,13 @@ public class account extends Fragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                name=snapshot.getValue().toString();
-                findConnections();
+                try{
+                    name=snapshot.getValue().toString();
+                    findConnections();
+                }
+                catch (Exception e){
+
+                }
             }
 
             @Override
@@ -144,16 +149,24 @@ public class account extends Fragment {
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("pings");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                arrayList.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    Ping temp=new Ping();
-                    temp=snapshot1.getValue(Ping.class);
-                    arrayList.add(temp);
+            public void onDataChange(@NonNull DataSnapshot snapshot){
+                try{
+                    {
+                        arrayList.clear();
+                        for(DataSnapshot snapshot1:snapshot.getChildren())
+                        {
+                            Ping temp=new Ping();
+                            temp=snapshot1.getValue(Ping.class);
+                            arrayList.add(temp);
+                        }
+                        fillPingList();
+                    }
                 }
-                fillPingList();
+                catch(Exception e){
+
+                }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -163,13 +176,18 @@ public class account extends Fragment {
     }
 
     void fillPingList(){
-        if(arrayList.isEmpty()){
-            imageNoResult.setVisibility(View.VISIBLE);
-            textNoResult.setVisibility(View.VISIBLE);
+        try{
+            if(arrayList.isEmpty()){
+                imageNoResult.setVisibility(View.VISIBLE);
+                textNoResult.setVisibility(View.VISIBLE);
+            }
+            customAdaptor = new CustomAdaptorAccountPagePings(getContext(),arrayList);
+            listView.setAdapter(customAdaptor);
+            progressBar.setVisibility(View.INVISIBLE);
         }
-        customAdaptor = new CustomAdaptorAccountPagePings(getContext(),arrayList);
-        listView.setAdapter(customAdaptor);
-        progressBar.setVisibility(View.INVISIBLE);
+        catch (Exception e){
+
+        }
     }
 
     @Override

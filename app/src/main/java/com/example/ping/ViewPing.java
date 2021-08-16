@@ -72,16 +72,22 @@ public class ViewPing extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 boolean temp=true;
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                {
-                    if(snapshot1.getValue().toString().compareTo(otherPersonsUid)==0){
-                        temp=false;
+                try{
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        if(snapshot1.getValue().toString().compareTo(otherPersonsUid)==0){
+                            temp=false;
+                        }
+                    }
+                    if(temp){
+                        FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("companions").push().setValue(otherPersonsUid);
+                        FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("companions").push().setValue(currentAcceptingUID);
                     }
                 }
-                if(temp){
-                    FirebaseDatabase.getInstance().getReference().child(currentAcceptingUID).child("companions").push().setValue(otherPersonsUid);
-                    FirebaseDatabase.getInstance().getReference().child(otherPersonsUid).child("companions").push().setValue(currentAcceptingUID);
+                catch (Exception e){
+
                 }
+
 
             }
 
@@ -119,9 +125,15 @@ public class ViewPing extends AppCompatActivity {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    currentUserName=snapshot.getValue().toString();
-                    PingRequest toBeAddedPingRequest = new PingRequest(otherUser.getDesc(), otherUser.getAddress(), otherUser.getLat(), otherUser.getLng(),currentUserName,currentAcceptingUID);
-                    addNotificationToOther(toBeAddedPingRequest,currentAcceptingUID);
+                    try{
+                        currentUserName=snapshot.getValue().toString();
+                        PingRequest toBeAddedPingRequest = new PingRequest(otherUser.getDesc(), otherUser.getAddress(), otherUser.getLat(), otherUser.getLng(),currentUserName,currentAcceptingUID);
+                        addNotificationToOther(toBeAddedPingRequest,currentAcceptingUID);
+                    }
+                    catch (Exception e){
+
+                    }
+
                 }
 
                 @Override
@@ -140,75 +152,81 @@ public class ViewPing extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 int count=0;
-                for(DataSnapshot dataSnapshot:snapshot.getChildren())
-                {
-                    double lat=0,lng=0;
-                    String finalVisible="",desc="",address="";
-                    for(DataSnapshot snapshot1:dataSnapshot.getChildren())
+                try{
+                    for(DataSnapshot dataSnapshot:snapshot.getChildren())
                     {
-                        if(snapshot1.getKey().toString().compareTo("lat")==0)
+                        double lat=0,lng=0;
+                        String finalVisible="",desc="",address="";
+                        for(DataSnapshot snapshot1:dataSnapshot.getChildren())
                         {
-                            lat=Double.parseDouble(snapshot1.getValue().toString());
+                            if(snapshot1.getKey().toString().compareTo("lat")==0)
+                            {
+                                lat=Double.parseDouble(snapshot1.getValue().toString());
+                            }
+                            if(snapshot1.getKey().toString().compareTo("lng")==0)
+                            {
+                                lng=Double.parseDouble(snapshot1.getValue().toString());
+                            }
+                            if(snapshot1.getKey().toString().compareTo("visible")==0)
+                            {
+                                finalVisible=(snapshot1.getValue().toString());
+                            }
+                            if(snapshot1.getKey().toString().compareTo("desc")==0)
+                            {
+                                desc=(snapshot1.getValue().toString());
+                            }
+                            if(snapshot1.getKey().toString().compareTo("address")==0)
+                            {
+                                address=(snapshot1.getValue().toString());
+                            }
+
                         }
-                        if(snapshot1.getKey().toString().compareTo("lng")==0)
+                        float result[]=new float[1];
+                        Location.distanceBetween(lat,lng,Double.parseDouble(EachPersonAccount.arrayList.get(index).getLat()),Double.parseDouble(EachPersonAccount.arrayList.get(index).getLng()),result);
+
+                        if(result[0]<150)
                         {
-                            lng=Double.parseDouble(snapshot1.getValue().toString());
-                        }
-                        if(snapshot1.getKey().toString().compareTo("visible")==0)
-                        {
-                            finalVisible=(snapshot1.getValue().toString());
-                        }
-                        if(snapshot1.getKey().toString().compareTo("desc")==0)
-                        {
-                            desc=(snapshot1.getValue().toString());
-                        }
-                        if(snapshot1.getKey().toString().compareTo("address")==0)
-                        {
-                            address=(snapshot1.getValue().toString());
+                            final String finalVisible_=finalVisible,address_=address,desc_=desc;
+                            final  double lat_=lat,lng_=lng;
+                            new AlertDialog.Builder(ViewPing.this)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setTitle("Alert!")
+                                    .setMessage("You already have a ping in this location proceed to ping back that ping??")
+                                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent i=new Intent(ViewPing.this,PingConfirmNewPing.class);
+                                            //make sure that one person is not able to make consecutive pings from one location
+                                            i.putExtra("visible",finalVisible_);
+                                            i.putExtra("lat",""+lat_);
+                                            i.putExtra("long",""+lng_);
+                                            i.putExtra("desc",desc_);
+                                            i.putExtra("address",address_);
+                                            i.putExtra("ping_back_id",EachPersonAccount.uid);
+                                            i.putExtra("addPing",false);
+                                            startActivity(i);
+                                        }
+                                    })
+                                    .show();
+                            count++;
                         }
 
                     }
-                    float result[]=new float[1];
-                    Location.distanceBetween(lat,lng,Double.parseDouble(EachPersonAccount.arrayList.get(index).getLat()),Double.parseDouble(EachPersonAccount.arrayList.get(index).getLng()),result);
-
-                    if(result[0]<150)
+                    if(count==0)
                     {
-                        final String finalVisible_=finalVisible,address_=address,desc_=desc;
-                        final  double lat_=lat,lng_=lng;
-                        new AlertDialog.Builder(ViewPing.this)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setTitle("Alert!")
-                                .setMessage("You already have a ping in this location proceed to ping back that ping??")
-                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent i=new Intent(ViewPing.this,PingConfirmNewPing.class);
-                                        //make sure that one person is not able to make consecutive pings from one location
-                                        i.putExtra("visible",finalVisible_);
-                                        i.putExtra("lat",""+lat_);
-                                        i.putExtra("long",""+lng_);
-                                        i.putExtra("desc",desc_);
-                                        i.putExtra("address",address_);
-                                        i.putExtra("ping_back_id",EachPersonAccount.uid);
-                                        i.putExtra("addPing",false);
-                                        startActivity(i);
-                                    }
-                                })
-                                .show();
-                        count++;
+                        Intent i=new Intent(ViewPing.this,PingBackForm.class);
+                        i.putExtra("lat",EachPersonAccount.arrayList.get(index).getLat());
+                        i.putExtra("lng",EachPersonAccount.arrayList.get(index).getLng());
+                        i.putExtra("index",index);
+                        i.putExtra("fromAccount",true);
+                        finish();
+                        startActivity(i);
                     }
+                }
+                catch (Exception e){
 
                 }
-                if(count==0)
-                {
-                    Intent i=new Intent(ViewPing.this,PingBackForm.class);
-                    i.putExtra("lat",EachPersonAccount.arrayList.get(index).getLat());
-                    i.putExtra("lng",EachPersonAccount.arrayList.get(index).getLng());
-                    i.putExtra("index",index);
-                    i.putExtra("fromAccount",true);
-                    finish();
-                    startActivity(i);
-                }
+
             }
 
             @Override

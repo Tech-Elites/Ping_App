@@ -70,19 +70,24 @@ public class PingConfirmNewPing extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful())
                 {
+                    try{
+                        CompanionSwitchClass c=new CompanionSwitchClass(task.getResult().getValue().toString(),true);
 
-                    CompanionSwitchClass c=new CompanionSwitchClass(task.getResult().getValue().toString(),true);
+                        arrayList.add(c);
+                        if(n<(companionIds.size()-1))
+                        {
 
-                    arrayList.add(c);
-                    if(n<(companionIds.size()-1))
-                    {
-
-                        fillTheList(companionIds.get(n+1),n+1);
+                            fillTheList(companionIds.get(n+1),n+1);
+                        }
+                        else
+                        {
+                            setAdaptor();
+                        }
                     }
-                    else
-                    {
-                        setAdaptor();
+                    catch (Exception e){
+
                     }
+
                 }
             }
         });
@@ -98,21 +103,27 @@ public class PingConfirmNewPing extends AppCompatActivity {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    companionIds.clear();
-                    for(DataSnapshot snapshot1:snapshot.getChildren())
-                    {
-                        if(snapshot1.getValue().toString().compareTo(ping_back_id)!=0)
-                            companionIds.add(snapshot1.getValue().toString());
+                    try{
+                        companionIds.clear();
+                        for(DataSnapshot snapshot1:snapshot.getChildren())
+                        {
+                            if(snapshot1.getValue().toString().compareTo(ping_back_id)!=0)
+                                companionIds.add(snapshot1.getValue().toString());
+
+                        }
+                        if(companionIds.size()>0)
+                            fillTheList(companionIds.get(0),0);
+                        else
+                        {
+                            image_cat.setVisibility(View.VISIBLE);
+                            warning.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    catch (Exception e){
 
                     }
-                    if(companionIds.size()>0)
-                        fillTheList(companionIds.get(0),0);
-                    else
-                    {
-                        image_cat.setVisibility(View.VISIBLE);
-                        warning.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
+
                 }
 
                 @Override
