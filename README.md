@@ -19,10 +19,6 @@ To test out the app on your android device, <a href="https://drive.google.com/fi
 
   <image src="https://user-images.githubusercontent.com/63179137/129543728-b2baf6d4-849b-4395-8a1e-3ca1eed5b363.jpeg" width=250>
 
-### Account Details
-  
-    <image src="https://user-images.githubusercontent.com/63179137/129543607-13365678-27fd-45d1-bd85-58c13fdf2164.jpeg" width=250>
-
 ### New Ping
   
 <image src="https://user-images.githubusercontent.com/63179137/129543348-839e2b3d-0f1e-4915-a211-679f15ea32b1.jpeg" width=250>
@@ -30,3 +26,8 @@ To test out the app on your android device, <a href="https://drive.google.com/fi
 ### Search for others
   
   <image src="https://user-images.githubusercontent.com/63179137/129543587-29256f9b-ceeb-4c2b-9463-fca325311137.jpeg" width=250>
+    
+### Account Details
+  
+  <image src="https://user-images.githubusercontent.com/63179137/129544505-46c7c093-3630-413d-a3a9-d11b02dccc47.jpeg" width=250>
+
