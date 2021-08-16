@@ -157,7 +157,7 @@ public class home extends Fragment {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
     void createPing()
     {
