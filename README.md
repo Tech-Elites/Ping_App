@@ -8,6 +8,7 @@ Making new companions is not like any ordinary follow system. Users can ping-bac
 Users can also search for other users to view their previous public pings, and can interact with them by sending ping-backs.
 
 To view the project presentation, <a href="https://youtu.be/JvoPI3u1oFM">click here</a>
+*There might be minor issues that may be caused due to network provider.
 
 ## Demonstration:
 
