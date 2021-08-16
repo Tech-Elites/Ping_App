@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +31,13 @@ public class NotificationPage extends AppCompatActivity {
     FirebaseUser user;
     NotifcationCustomAdaptor customAdaptor;
     TextView checkerTV;
+    ProgressBar progressBar;
     int count=0;
 
     void deleteNotification(int pos){
         String uidToDelete=arrayList.get(pos).getUserid();
 
-        arrayList.remove(pos);
-        customAdaptor=new NotifcationCustomAdaptor(this,arrayList);
-        listView.setAdapter(customAdaptor);
+
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("notifications");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -48,6 +48,10 @@ public class NotificationPage extends AppCompatActivity {
                         PingRequest temp=snapshot1.getValue(PingRequest.class);
                         if(temp.getUserid().compareTo(uidToDelete)==0){
                             snapshot1.getRef().removeValue();
+                            arrayList.remove(pos);
+                            customAdaptor=new NotifcationCustomAdaptor(NotificationPage.this,arrayList);
+                            listView.setAdapter(customAdaptor);
+                            progressBar.setVisibility(View.INVISIBLE);
                             count--;
                         }
                         checker();
@@ -73,6 +77,8 @@ public class NotificationPage extends AppCompatActivity {
         user= FirebaseAuth.getInstance().getCurrentUser();
         listView=findViewById(R.id.notificationListView);
         arrayList=new ArrayList<>();
+        progressBar=findViewById(R.id.progressBarNotification);
+        progressBar.setVisibility(View.VISIBLE);
         checkerTV=findViewById(R.id.notificationsEmpty);
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("notifications");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -89,6 +95,7 @@ public class NotificationPage extends AppCompatActivity {
                     checker();
                     customAdaptor=new NotifcationCustomAdaptor(NotificationPage.this,arrayList);
                     listView.setAdapter(customAdaptor);
+                    progressBar.setVisibility(View.INVISIBLE);
                     listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                         @Override
                         public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
@@ -97,6 +104,7 @@ public class NotificationPage extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which){
                                         case DialogInterface.BUTTON_POSITIVE:
+                                            progressBar.setVisibility(View.VISIBLE);
                                             deleteNotification(pos);
                                             break;
 
