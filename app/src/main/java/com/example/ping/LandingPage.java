@@ -33,6 +33,7 @@ public class LandingPage extends AppCompatActivity {
     Toolbar tb;
     Button notBut;
     int count=0;
+
     String username;
 
     @Override
@@ -62,7 +63,6 @@ public class LandingPage extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
