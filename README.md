@@ -7,6 +7,8 @@ To overcome this dilemma, we aim to launch our application "Ping", which aims to
 Making new companions is not like any ordinary follow system. Users can ping-back other users who have already visited that place, sharing their memories, it will be up to the user who receives that ping-back to either accept it or discard it. If the user accepts that ping back they will be made companion with the user who sent it.
 Users can also search for other users to view their previous public pings, and can interact with them by sending ping-backs.
 
+To view the project presentation, <a href="https://youtu.be/JvoPI3u1oFM">click here</a>
+
 ## Demonstration:
 
 ### Authentication:
